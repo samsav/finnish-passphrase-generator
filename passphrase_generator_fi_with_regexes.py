@@ -5,6 +5,8 @@ import re
 # TODO:
 # - refactor all the code
 # - use secrets instead of random?
+# - fix inflection pattern 5 to account for words ending in consonants
+# - add support for alternative forms in e.g. plural genitive and partitive?
 
 
 def prepare_full_list(file_path):
@@ -68,6 +70,7 @@ def compose_nouns(word_list):
 
 
 def attach_noun_endings(word):
+    """Attach random number, inflection, and clitic endings to a noun"""
     number = random.choice(number_set)
     inflection = random.choice(inflection_set)
     # clitic = random.choice(clitic_set)
@@ -85,85 +88,6 @@ inflection_set = ['+Nom', '+Gen', '+Par',
 clitic_set = ['', 'hAn', 'kin', 'kO', 'pA']
 
 
-# TODO:
-# - move patterns to a separate data file
-# - fix pattern 5 to account for words ending in consonants
-# - add patterns?
-# - add support for alternative forms in e.g. plural genitive and partitive?
-
-inflection_patterns = (
-    (r'\<N[124][A-M]?\>\w+\+Sg\+Nom',  r'\+Sg\+Nom',       ''),
-    (r'\<N[124][A-M]?\>\w+\+Sg\+Gen',  r'\+Sg\+Gen',       'n'),
-    (r'\<N[124][A-M]?\>\w+\+Sg\+Par',  r'\+Sg\+Par',       'A'),
-    (r'\<N[124][A-M]?\>\w+\+Sg\+Ill',  r'([aoueiäöy])\+Sg\+Ill',   r'\1\1n'),
-    (r'\<N[124][A-M]?\>\w+\+Sg\+Ine',  r'\+Sg\+Ine',       'ssA'),
-    (r'\<N[124][A-M]?\>\w+\+Sg\+Ela',  r'\+Sg\+Ela',       'stA'),
-    (r'\<N[124][A-M]?\>\w+\+Sg\+Ade',  r'\+Sg\+Ade',       'llA'),
-    (r'\<N[124][A-M]?\>\w+\+Sg\+Abl',  r'\+Sg\+Abl',       'ltA'),
-    (r'\<N[124][A-M]?\>\w+\+Sg\+All',  r'\+Sg\+All',       'lle'),
-    (r'\<N[124][A-M]?\>\w+\+Sg\+Ess',  r'\+Sg\+Ess',       'nA'),
-    (r'\<N[124][A-M]?\>\w+\+Sg\+Tra',  r'\+Sg\+Tra',       'ksi'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+Nom',  r'\+Pl\+Nom',       't'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+Gen',  r'\+Pl\+Gen',       'jen'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+Par',  r'\+Pl\+Par',       'jA'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+Ill',  r'\+Pl\+Ill',       'ihin'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+Ine',  r'\+Pl\+Ine',       'issA'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+Ela',  r'\+Pl\+Ela',       'istA'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+Ade',  r'\+Pl\+Ade',       'illA'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+Abl',  r'\+Pl\+Abl',       'iltA'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+All',  r'\+Pl\+All',       'ille'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+Ess',  r'\+Pl\+Ess',       'inA'),
-    (r'\<N[124][A-M]?\>\w+\+Pl\+Tra',  r'\+Pl\+Tra',       'iksi'),
-
-    (r'\<N3[A-M]?\>\w+\+Sg\+Nom',  r'\+Sg\+Nom',       ''),
-    (r'\<N3[A-M]?\>\w+\+Sg\+Gen',  r'\+Sg\+Gen',       'n'),
-    (r'\<N3[A-M]?\>\w+\+Sg\+Par',  r'\+Sg\+Par',       'tA'),
-    (r'\<N3[A-M]?\>\w+\+Sg\+Ill',  r'([aoueiäöy])\+Sg\+Ill',   r'\1\1n'),
-    (r'\<N3[A-M]?\>\w+\+Sg\+Ine',  r'\+Sg\+Ine',       'ssA'),
-    (r'\<N3[A-M]?\>\w+\+Sg\+Ela',  r'\+Sg\+Ela',       'stA'),
-    (r'\<N3[A-M]?\>\w+\+Sg\+Ade',  r'\+Sg\+Ade',       'llA'),
-    (r'\<N3[A-M]?\>\w+\+Sg\+Abl',  r'\+Sg\+Abl',       'ltA'),
-    (r'\<N3[A-M]?\>\w+\+Sg\+All',  r'\+Sg\+All',       'lle'),
-    (r'\<N3[A-M]?\>\w+\+Sg\+Ess',  r'\+Sg\+Ess',       'nA'),
-    (r'\<N3[A-M]?\>\w+\+Sg\+Tra',  r'\+Sg\+Tra',       'ksi'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+Nom',  r'\+Pl\+Nom',       't'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+Gen',  r'\+Pl\+Gen',       'iden'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+Par',  r'\+Pl\+Par',       'itA'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+Ill',  r'\+Pl\+Ill',       'ihin'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+Ine',  r'\+Pl\+Ine',       'issA'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+Ela',  r'\+Pl\+Ela',       'istA'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+Ade',  r'\+Pl\+Ade',       'illA'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+Abl',  r'\+Pl\+Abl',       'iltA'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+All',  r'\+Pl\+All',       'ille'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+Ess',  r'\+Pl\+Ess',       'inA'),
-    (r'\<N3[A-M]?\>\w+\+Pl\+Tra',  r'\+Pl\+Tra',       'iksi'),
-
-    (r'\<N5[A-M]?\>\w+\+Sg\+Nom',  r'\+Sg\+Nom',       ''),
-    (r'\<N5[A-M]?\>\w+\+Sg\+Gen',  r'\+Sg\+Gen',       'n'),
-    (r'\<N5[A-M]?\>\w+\+Sg\+Par',  r'\+Sg\+Par',       'A'),
-    (r'\<N5[A-M]?\>\w+\+Sg\+Ill',  r'\+Sg\+Ill',       'in'),
-    (r'\<N5[A-M]?\>\w+\+Sg\+Ine',  r'\+Sg\+Ine',       'ssA'),
-    (r'\<N5[A-M]?\>\w+\+Sg\+Ela',  r'\+Sg\+Ela',       'stA'),
-    (r'\<N5[A-M]?\>\w+\+Sg\+Ade',  r'\+Sg\+Ade',       'llA'),
-    (r'\<N5[A-M]?\>\w+\+Sg\+Abl',  r'\+Sg\+Abl',       'ltA'),
-    (r'\<N5[A-M]?\>\w+\+Sg\+All',  r'\+Sg\+All',       'lle'),
-    (r'\<N5[A-M]?\>\w+\+Sg\+Ess',  r'\+Sg\+Ess',       'nA'),
-    (r'\<N5[A-M]?\>\w+\+Sg\+Tra',  r'\+Sg\+Tra',       'ksi'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+Nom',  r'\+Pl\+Nom',       't'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+Gen',  r'\+Pl\+Gen',       'en'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+Par',  r'i\+Pl\+Par',      'ejA'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+Ill',  r'i\+Pl\+Ill',      'eihin'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+Ine',  r'i\+Pl\+Ine',      'eissA'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+Ela',  r'i\+Pl\+Ela',      'eistA'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+Ade',  r'i\+Pl\+Ade',      'eillA'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+Abl',  r'i\+Pl\+Abl',      'eiltA'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+All',  r'i\+Pl\+All',      'eille'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+Ess',  r'i\+Pl\+Ess',      'einA'),
-    (r'\<N5[A-M]?\>\w+\+Pl\+Tra',  r'i\+Pl\+Tra',      'eiksi'),
-
-)
-
-
 def build_inflect_functions(pattern, search, replace):
 
     def match_rule(word):
@@ -179,6 +103,8 @@ def initialize_rules(pattern_file):
     rules = []
     with open(pattern_file, encoding='utf-8') as fp:
         for line in fp:
+            if line[0] in ['#', '\n', '\r\n']:
+                continue
             pattern, search, replace = line.split(None, 3)
             rules.append(build_inflect_functions(
                                         pattern, search, replace))
@@ -187,17 +113,7 @@ def initialize_rules(pattern_file):
 
 gradations = initialize_rules('gradation-patterns.txt')
 
-
-inflections = [build_inflect_functions(pattern, search, replace)
-               for pattern, search, replace in inflection_patterns]
-
-
-def convert_to_plural(word):
-    """Helper function for ensuring that words only appearing in the
-       plural form (such as 'aivot' or 'häät') are lexically represented
-       as plural."""
-    word = re.sub(r't\+Sg(\+\w+)?(\+\w+)?(\+\w+)?', r'+Pl\1\2\3', word)
-    return word
+inflections = initialize_rules('inflection-patterns.txt')
 
 
 def gradate(word):
@@ -212,6 +128,14 @@ def inflect(word):
     for match_rule, inflect_rule in inflections:
         if match_rule(word):
             return inflect_rule(word)
+
+
+def convert_to_plural(word):
+    """Helper function for ensuring that words only appearing in the
+       plural form (such as 'aivot' or 'häät') are lexically represented
+       as plural."""
+    word = re.sub(r't\+Sg(\+\w+)?(\+\w+)?(\+\w+)?', r'+Pl\1\2\3', word)
+    return word
 
 
 def apply_consonant_gradation(word_list):
@@ -264,7 +188,8 @@ def main():
 
     full_word_list = prepare_full_list('kotus_sanalista/testilista.xml')
 
-    simple_nouns = select_inflection_paradigms(full_word_list, 1, 5)
+    # Pick nouns from inflection paradigms 1-6
+    nouns = select_inflection_paradigms(full_word_list, 1, 6)
 
     while True:
 
@@ -273,9 +198,9 @@ def main():
         if komento == "n":
             break
 
-        random_subset_50 = pick_random_set(simple_nouns, 50)
+        random_nouns = pick_random_set(nouns, 50)
 
-        lexical_nouns = compose_nouns(random_subset_50)
+        lexical_nouns = compose_nouns(random_nouns)
 
         gradated_nouns = apply_consonant_gradation(lexical_nouns)
 
@@ -296,19 +221,6 @@ def main():
         print()
 
         print("Debugging consonant gradation:\n")
-        print("Plurals:")
-        plurals = apply_consonant_gradation(['<N1A>baarimikko+Pl+Tra',
-                                             '<N5C>attentaatti+Pl+Tra',
-                                             '<N5B>kaappi+Pl+Tra',
-                                             '<N9E>lapa+Pl+Nom',
-                                             '<N48E>taive+Pl+Nom',
-                                             '<N1F>satu+Pl+Ine',
-                                             '<N5J>evakuointi+Pl+Ade'])
-
-        print("\nApplied consonant gradation:")
-        for word in plurals:
-            print(word)
-
         print("\nSingulars:")
         singulars = apply_consonant_gradation(['<N1A>baarimikko+Sg+Tra',
                                                '<N5C>attentaatti+Sg+Tra',
@@ -323,6 +235,19 @@ def main():
             print(word)
 
         print()
+
+        print("Plurals:")
+        plurals = apply_consonant_gradation(['<N1A>baarimikko+Pl+Tra',
+                                             '<N5C>attentaatti+Pl+Tra',
+                                             '<N5B>kaappi+Pl+Tra',
+                                             '<N9E>lapa+Pl+Nom',
+                                             '<N48E>taive+Pl+Nom',
+                                             '<N1F>satu+Pl+Ine',
+                                             '<N5J>evakuointi+Pl+Ade'])
+
+        print("\nApplied consonant gradation:")
+        for word in plurals:
+            print(word)
 
 
 if __name__ == '__main__':
