@@ -105,9 +105,14 @@ gradation_patterns = (
     (r'\<N\d*E\>\w+[aoueiäöy]v[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
      r'([aoueiäöy])v([aoueiäöy])', r'\1p\2'),
 
-    (r'\<N\d*F\>\w+[aoueiäöy]t[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
+    (r'\<N\d*F\>\w+[aoueiäöy]t[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
      r'([aoueiäöy])t([aoueiäöy])', r'\1d\2'),
-    (r'\<N\d*F\>\w+[aoueiäöy]d[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
+    (r'\<N\d*F\>\w+[aoueiäöy]t[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
+     r'([aoueiäöy])t([aoueiäöy])', r'\1d\2'),
+
+    (r'\<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
+     r'([aoueiäöy])d([aoueiäöy])', r'\1t\2'),
+    (r'\<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Pl\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
      r'([aoueiäöy])d([aoueiäöy])', r'\1t\2'),
 )
 
@@ -318,7 +323,8 @@ def main():
                                              '<N5C>attentaatti+Pl+Tra',
                                              '<N5B>kaappi+Pl+Tra',
                                              '<N9E>lapa+Pl+Nom',
-                                             '<N48E>taive+Pl+Nom'])
+                                             '<N48E>taive+Pl+Nom',
+                                             '<N1F>satu+Pl+Ine'])
 
         print("\nApplied consonant gradation:")
         for word in plurals:
@@ -329,7 +335,8 @@ def main():
                                                '<N5C>attentaatti+Sg+Tra',
                                                '<N5B>kaappi+Sg+Tra',
                                                '<N9E>lapa+Sg+Gen',
-                                               '<N48E>taive+Sg+Gen'])
+                                               '<N48E>taive+Sg+Gen',
+                                               '<N1F>satu+Sg+All'])
 
         print("\nApplied consonant gradation:")
         for word in singulars:
