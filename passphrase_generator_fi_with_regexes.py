@@ -86,47 +86,6 @@ clitic_set = ['', 'hAn', 'kin', 'kO', 'pA']
 
 
 # TODO:
-# - add more patterns
-# - move patterns to a separate data file
-gradation_patterns = (
-    (r'\<N\d*[ABC]\>\w+(p|t|k)\1\w+\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
-     r'(p|t|k)\1(?=\w{1,2}\+)', r'\1'),
-    (r'\<N\d*[ABC]\>\w+(p|t|k)\1\w+\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
-     r'(p|t|k)\1(?=\w{1,2}\+)', r'\1'),
-
-    (r'\<N\d*E\>\w+[aoueiäöy]p[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])p([aoueiäöy])', r'\1v\2'),
-    (r'\<N\d*E\>\w+[aoueiäöy]p[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])p([aoueiäöy])', r'\1v\2'),
-
-    (r'\<N\d*E\>\w+[aoueiäöy]v[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])v([aoueiäöy])', r'\1p\2'),
-    (r'\<N\d*E\>\w+[aoueiäöy]v[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])v([aoueiäöy])', r'\1p\2'),
-
-    (r'\<N\d*F\>\w+[aoueiäöy]t[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])t([aoueiäöy])', r'\1d\2'),
-    (r'\<N\d*F\>\w+[aoueiäöy]t[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])t([aoueiäöy])', r'\1d\2'),
-
-    (r'\<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])d([aoueiäöy])', r'\1t\2'),
-    (r'\<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Pl\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])d([aoueiäöy])', r'\1t\2'),
-
-    (r'\<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])nt([aoueiäöy])', r'\1nn\2'),
-    (r'\<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Pl\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])nt([aoueiäöy])', r'\1nn\2'),
-
-    (r'\<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])nn([aoueiäöy])', r'\1nt\2'),
-    (r'\<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Pl\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
-     r'([aoueiäöy])nn([aoueiäöy])', r'\1nt\2'),
-)
-
-
-# TODO:
 # - move patterns to a separate data file
 # - fix pattern 5 to account for words ending in consonants
 # - add patterns?
@@ -216,8 +175,18 @@ def build_inflect_functions(pattern, search, replace):
     return (match_rule, inflect_rule)
 
 
-gradations = [build_inflect_functions(pattern, search, replace)
-              for pattern, search, replace in gradation_patterns]
+def initialize_rules(pattern_file):
+    rules = []
+    with open(pattern_file, encoding='utf-8') as fp:
+        for line in fp:
+            pattern, search, replace = line.split(None, 3)
+            rules.append(build_inflect_functions(
+                                        pattern, search, replace))
+    return rules
+
+
+gradations = initialize_rules('gradation-patterns.txt')
+
 
 inflections = [build_inflect_functions(pattern, search, replace)
                for pattern, search, replace in inflection_patterns]
