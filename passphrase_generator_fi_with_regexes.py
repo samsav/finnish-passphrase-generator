@@ -86,7 +86,6 @@ clitic_set = ['', 'hAn', 'kin', 'kO', 'pA']
 
 
 # TODO:
-# - fix patterns E and F
 # - add more patterns
 # - move patterns to a separate data file
 gradation_patterns = (
@@ -114,6 +113,16 @@ gradation_patterns = (
      r'([aoueiäöy])d([aoueiäöy])', r'\1t\2'),
     (r'\<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Pl\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
      r'([aoueiäöy])d([aoueiäöy])', r'\1t\2'),
+
+    (r'\<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
+     r'([aoueiäöy])nt([aoueiäöy])', r'\1nn\2'),
+    (r'\<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Pl\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
+     r'([aoueiäöy])nt([aoueiäöy])', r'\1nn\2'),
+
+    (r'\<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
+     r'([aoueiäöy])nn([aoueiäöy])', r'\1nt\2'),
+    (r'\<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Pl\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
+     r'([aoueiäöy])nn([aoueiäöy])', r'\1nt\2'),
 )
 
 
@@ -324,7 +333,8 @@ def main():
                                              '<N5B>kaappi+Pl+Tra',
                                              '<N9E>lapa+Pl+Nom',
                                              '<N48E>taive+Pl+Nom',
-                                             '<N1F>satu+Pl+Ine'])
+                                             '<N1F>satu+Pl+Ine',
+                                             '<N5J>evakuointi+Pl+Ade'])
 
         print("\nApplied consonant gradation:")
         for word in plurals:
@@ -336,7 +346,8 @@ def main():
                                                '<N5B>kaappi+Sg+Tra',
                                                '<N9E>lapa+Sg+Gen',
                                                '<N48E>taive+Sg+Gen',
-                                               '<N1F>satu+Sg+All'])
+                                               '<N1F>satu+Sg+All',
+                                               '<N5J>evakuointi+Sg+Gen'])
 
         print("\nApplied consonant gradation:")
         for word in singulars:
