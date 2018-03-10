@@ -5,7 +5,6 @@ import re
 # TODO:
 # - refactor all the code
 # - use secrets instead of random?
-# - fix inflection pattern 5 to account for words ending in consonants
 # - add support for alternative forms in e.g. plural genitive and partitive?
 
 
@@ -129,6 +128,8 @@ def inflect(word):
         if match_rule(word):
             return inflect_rule(word)
 
+    return word
+
 
 def convert_to_plural(word):
     """Helper function for ensuring that words only appearing in the
@@ -247,6 +248,17 @@ def main():
 
         print("\nApplied consonant gradation:")
         for word in plurals:
+            print(word)
+
+        print()
+
+        print("Debugging word-internal hyphens:")
+
+        words = apply_inflection_rules(apply_consonant_gradation(
+                ['<N6>agar-agar+Pl+Abl']
+                ))
+
+        for word in words:
             print(word)
 
 
