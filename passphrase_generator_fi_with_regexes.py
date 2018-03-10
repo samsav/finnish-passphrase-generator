@@ -89,10 +89,10 @@ clitic_set = ['', 'hAn', 'kin', 'kO', 'pA']
 # - add more patterns
 # - move patterns to a separate data file
 gradation_patterns = (
-    (r'\<N\d?[ABC]\>\w+(p|t|k)\1\w*(?=\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
-     r'(p|t|k)\1(?=\w{,2}\+)', r'\1'),  # pp/tt/kk -> p/t/k in singular forms
-    (r'\<N\d?[ABC]\>\w+(p|t|k)\1\w*(?=\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra))',
-     r'(p|t|k)\1(?=\w{,2}\+)', r'\1'),  # pp/tt/kk -> p/t/k in plural forms
+    (r'\<N\d?[ABC]\>\w+(p|t|k)\1\w+\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
+     r'(p|t|k)\1(?=\w{1,2}\+)', r'\1'),
+    (r'\<N\d?[ABC]\>\w+(p|t|k)\1\w+\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
+     r'(p|t|k)\1(?=\w{1,2}\+)', r'\1'),
     (r'\<N\d?E\>\w+[aoueiäöy]p[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
      r'([aoueiäöy])p([aoueiäöy])', r'\1v\2'),
     (r'\<N\d?E\>\w+[aoueiäöy]v[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
@@ -100,7 +100,7 @@ gradation_patterns = (
     (r'\<N\d?F\>\w+[aoueiäöy]t[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
      r'([aoueiäöy])t([aoueiäöy])', r'\1d\2'),
     (r'\<N\d?F\>\w+[aoueiäöy]d[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
-     r'([aoueiäöy])d([aoueiäöy])', r'\1t\2')
+     r'([aoueiäöy])d([aoueiäöy])', r'\1t\2'),
 )
 
 
@@ -202,6 +202,9 @@ inflections = [build_inflect_functions(pattern, search, replace)
 
 
 def convert_to_plural(word):
+    """Helper function for ensuring that words only appearing in the
+       plural form (such as 'aivot' or 'häät') are lexically represented
+       as plural."""
     word = re.sub(r't\+Sg(\+\w+)?(\+\w+)?(\+\w+)?', r'+Pl\1\2\3', word)
     return word
 
@@ -210,8 +213,8 @@ def gradate(word):
     for match_rule, grad_rule in gradations:
         if match_rule(word):
             return grad_rule(word)
-        else:
-            return word
+
+    return word
 
 
 def inflect(word):
@@ -225,7 +228,7 @@ def apply_consonant_gradation(word_list):
     gradated_words = []
     for word in word_list:
         print(word)
-        if re.search(r't\+Sg(\+\w+)?(\+\w+)?(\+\w+)?', word):
+        if re.search(r't\+Sg', word):
             word = convert_to_plural(word)
         word = gradate(word)
         gradated_words.append(word)
@@ -298,6 +301,27 @@ def main():
         for i in range(0, 4):
             phrase = form_passphrase(final_nouns)
             print("{0} merkkiä: {1}\n".format(len(phrase), phrase))
+
+        print()
+
+        print("Debugging consonant gradation:\n")
+        print("Plurals:")
+        plurals = apply_consonant_gradation(['<N1A>baarimikko+Pl+Tra',
+                                             '<N5C>attentaatti+Pl+Tra',
+                                             '<N5B>kaappi+Pl+Tra'])
+
+        print("\nApplied consonant gradation:")
+        for word in plurals:
+            print(word)
+
+        print("\nSingulars:")
+        singulars = apply_consonant_gradation(['<N1A>baarimikko+Sg+Tra',
+                                               '<N5C>attentaatti+Sg+Tra',
+                                               '<N5B>kaappi+Sg+Tra'])
+
+        print("\nApplied consonant gradation:")
+        for word in singulars:
+            print(word)
 
         print()
 
