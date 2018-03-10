@@ -6,6 +6,7 @@ import re
 # - refactor all the code
 # - use secrets instead of random?
 # - add support for alternative forms in e.g. plural genitive and partitive?
+# - fix vowel harmony
 
 
 def prepare_full_list(file_path):
@@ -244,7 +245,8 @@ def main():
                                              '<N9E>lapa+Pl+Nom',
                                              '<N48E>taive+Pl+Nom',
                                              '<N1F>satu+Pl+Ine',
-                                             '<N5J>evakuointi+Pl+Ade'])
+                                             '<N5J>evakuointi+Pl+Ade',
+                                             '<N5J>fosforointi+Pl+Gen'])
 
         print("\nApplied consonant gradation:")
         for word in plurals:

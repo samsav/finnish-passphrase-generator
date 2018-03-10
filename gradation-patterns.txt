@@ -14,10 +14,10 @@
 \<N\d*F\>\w+[aoueiäöy]t[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])t([aoueiäöy])    \1d\2
 \<N\d*F\>\w+[aoueiäöy]t[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])t([aoueiäöy])    \1d\2
 \<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])d([aoueiäöy])    \1t\2
-\<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Pl\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])d([aoueiäöy])    \1t\2
+\<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])d([aoueiäöy])    \1t\2
 
 # Pattern J
 \<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nt([aoueiäöy])   \1nn\2
-\<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Pl\+(Gen|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nt([aoueiäöy])   \1nn\2
+\<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nt([aoueiäöy])   \1nn\2
 \<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nn([aoueiäöy])   \1nt\2
-\<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Pl\+(Gen|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nn([aoueiäöy])   \1nt\2
+\<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nn([aoueiäöy])   \1nt\2
