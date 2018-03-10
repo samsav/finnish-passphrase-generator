@@ -48,6 +48,7 @@ def pick_random_set(word_list, size_of_set):
 def compose_nouns(word_list):
     """Prepend all noun entries with their inflection
        and gradation paradigms."""
+
     print("Composing noun entries...")
 
     nouns = []
@@ -89,17 +90,24 @@ clitic_set = ['', 'hAn', 'kin', 'kO', 'pA']
 # - add more patterns
 # - move patterns to a separate data file
 gradation_patterns = (
-    (r'\<N\d?[ABC]\>\w+(p|t|k)\1\w+\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
+    (r'\<N\d*[ABC]\>\w+(p|t|k)\1\w+\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
      r'(p|t|k)\1(?=\w{1,2}\+)', r'\1'),
-    (r'\<N\d?[ABC]\>\w+(p|t|k)\1\w+\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
+    (r'\<N\d*[ABC]\>\w+(p|t|k)\1\w+\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
      r'(p|t|k)\1(?=\w{1,2}\+)', r'\1'),
-    (r'\<N\d?E\>\w+[aoueiäöy]p[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
+
+    (r'\<N\d*E\>\w+[aoueiäöy]p[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
      r'([aoueiäöy])p([aoueiäöy])', r'\1v\2'),
-    (r'\<N\d?E\>\w+[aoueiäöy]v[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
+    (r'\<N\d*E\>\w+[aoueiäöy]p[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
+     r'([aoueiäöy])p([aoueiäöy])', r'\1v\2'),
+
+    (r'\<N\d*E\>\w+[aoueiäöy]v[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)',
      r'([aoueiäöy])v([aoueiäöy])', r'\1p\2'),
-    (r'\<N\d?F\>\w+[aoueiäöy]t[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
+    (r'\<N\d*E\>\w+[aoueiäöy]v[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)',
+     r'([aoueiäöy])v([aoueiäöy])', r'\1p\2'),
+
+    (r'\<N\d*F\>\w+[aoueiäöy]t[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
      r'([aoueiäöy])t([aoueiäöy])', r'\1d\2'),
-    (r'\<N\d?F\>\w+[aoueiäöy]d[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
+    (r'\<N\d*F\>\w+[aoueiäöy]d[aoueiäöy](?=\w*\+\w{2}\+(Gen|Ine|Ela|Ade|All|Abl|Tra))',
      r'([aoueiäöy])d([aoueiäöy])', r'\1t\2'),
 )
 
@@ -308,7 +316,9 @@ def main():
         print("Plurals:")
         plurals = apply_consonant_gradation(['<N1A>baarimikko+Pl+Tra',
                                              '<N5C>attentaatti+Pl+Tra',
-                                             '<N5B>kaappi+Pl+Tra'])
+                                             '<N5B>kaappi+Pl+Tra',
+                                             '<N9E>lapa+Pl+Nom',
+                                             '<N48E>taive+Pl+Nom'])
 
         print("\nApplied consonant gradation:")
         for word in plurals:
@@ -317,7 +327,9 @@ def main():
         print("\nSingulars:")
         singulars = apply_consonant_gradation(['<N1A>baarimikko+Sg+Tra',
                                                '<N5C>attentaatti+Sg+Tra',
-                                               '<N5B>kaappi+Sg+Tra'])
+                                               '<N5B>kaappi+Sg+Tra',
+                                               '<N9E>lapa+Sg+Gen',
+                                               '<N48E>taive+Sg+Gen'])
 
         print("\nApplied consonant gradation:")
         for word in singulars:
