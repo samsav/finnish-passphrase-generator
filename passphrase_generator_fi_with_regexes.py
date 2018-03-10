@@ -2,11 +2,13 @@ from bs4 import BeautifulSoup
 import random
 import re
 
+"""A simple passphrase generator for Finnish"""
+
 # TODO:
-# - refactor all the code
 # - use secrets instead of random?
 # - add support for alternative forms in e.g. plural genitive and partitive?
 # - fix vowel harmony
+# - enable clitics
 
 
 def prepare_full_list(file_path):
@@ -30,34 +32,37 @@ def prepare_full_list(file_path):
 def select_inflection_paradigms(word_entries, lower_limit, upper_limit):
     """Select word entries that have specific inflection paradigms
        in the Kotus word list."""
-    print("Picking words with desired inflection paradigms..."
-          "(the easy ones, that is)\n")
-    word_entries_with_specific_infl = []
+
+    print("Picking words with desired inflection paradigms...")
+    word_entries_with_selected_infls = []
     for entry in word_entries:
         if entry.t is not None and int(entry.t.tn.string) >= lower_limit \
            and int(entry.t.tn.string) <= upper_limit:
-            word_entries_with_specific_infl.append(entry)
-    return word_entries_with_specific_infl
+            word_entries_with_selected_infls.append(entry)
+    return word_entries_with_selected_infls
 
 
 # Pick X word entries at random. Using random.sample here to avoid getting
 # duplicates. Will replace with random.choices for final version. (Or secrets.)
 def pick_random_set(word_list, size_of_set):
+    """Randomly select a subset of the input word list."""
     random_entries = random.sample(word_list, k=size_of_set)
     return random_entries
 
 
 def compose_nouns(word_list):
-    """Prepend all noun entries with their inflection
-       and gradation paradigms."""
+    """Prepend all noun entries in the list
+    with their inflection and gradation paradigms."""
 
     print("Composing noun entries...")
 
     nouns = []
     for word_entry in word_list:
+        # replace spaces with underscores to simplify later regexes
         word = word_entry.s.string.replace(' ', '_')
         infl_paradigm = 'N'
         grad_paradigm = ''
+        # the first 51 inflection paradigms in the Kotus word list cover nouns
         if word_entry.t is not None and int(word_entry.t.tn.string) < 52:
             infl_paradigm += word_entry.t.tn.string
         if word_entry.av is not None:
@@ -88,7 +93,12 @@ inflection_set = ['+Nom', '+Gen', '+Par',
 clitic_set = ['', 'hAn', 'kin', 'kO', 'pA']
 
 
+# This approach to handling the necessary regex functions using closures
+# to dynamically build the functions from regex patterns given as
+# parameters is taken from Dive into Python 3 by Mark Pilgrim
+# (see http://www.diveintopython3.net/generators.html)
 def build_inflect_functions(pattern, search, replace):
+    """Dynamically build regex search and replace functions."""
 
     def match_rule(word):
         return re.search(pattern, word)
@@ -100,10 +110,13 @@ def build_inflect_functions(pattern, search, replace):
 
 
 def initialize_rules(pattern_file):
+    """A helper function for extracting regex search and replace rules
+       from an external file."""
+
     rules = []
     with open(pattern_file, encoding='utf-8') as fp:
         for line in fp:
-            if line[0] in ['#', '\n', '\r\n']:
+            if line[0] in ['#', '\n', '\r']:
                 continue
             pattern, search, replace = line.split(None, 3)
             rules.append(build_inflect_functions(
@@ -117,6 +130,9 @@ inflections = initialize_rules('inflection-patterns.txt')
 
 
 def gradate(word):
+    """Check if a word matches any gradation rules: if yes, return the word
+       with gradation replace rules applied. If no, return the original word
+       in order to avoid returning None values."""
     for match_rule, grad_rule in gradations:
         if match_rule(word):
             return grad_rule(word)
@@ -125,6 +141,9 @@ def gradate(word):
 
 
 def inflect(word):
+    """Check if a word matches any inflection rules: if yes, return the word
+       with inflection replace rules applied. If no, return the original word
+       in order to avoid returning None values."""
     for match_rule, inflect_rule in inflections:
         if match_rule(word):
             return inflect_rule(word)
@@ -136,11 +155,14 @@ def convert_to_plural(word):
     """Helper function for ensuring that words only appearing in the
        plural form (such as 'aivot' or 'häät') are lexically represented
        as plural."""
-    word = re.sub(r't\+Sg(\+\w+)?(\+\w+)?(\+\w+)?', r'+Pl\1\2\3', word)
+    word = re.sub(r't\+Sg', r'+Pl', word)
     return word
 
 
 def apply_consonant_gradation(word_list):
+    """Apply consonant gradation rules to a list of words and return
+       a new list."""
+    # include a print statement for debugging
     print("\nApplying gradation rules to these lexical forms:")
     gradated_words = []
     for word in word_list:
@@ -153,19 +175,25 @@ def apply_consonant_gradation(word_list):
 
 
 def apply_inflection_rules(word_list):
+    """Apply inflection rules to a list of words and return
+       a new list."""
+    # include a print statement for debugging
     print("\nApplying inflection rules to these lexical forms:")
     inflected_words = []
     for word in word_list:
         print(word)
         inflected = inflect(word)
         # TODO: move cleanup to a separate function
-        cleaned = re.sub(r'\<N\d[A-M]?\>', '', inflected)
+        cleaned = re.sub(r'\<N\d+[A-M]?\>', '', inflected)
         cleaned = re.sub('_', ' ', cleaned)
         inflected_words.append(cleaned)
     return inflected_words
 
 
 def apply_vowel_harmony(word_list):
+    """Apply vowel harmony transformations to a list of words
+       and return a new list."""
+    # include a print statement for debugging
     print("\nApplying vowel harmony to these forms:")
     words_with_vowel_harmony = []
     for word in word_list:
@@ -180,6 +208,8 @@ def apply_vowel_harmony(word_list):
 
 
 def form_passphrase(word_list):
+    """A helper function for turning random words in a list into
+       a passphrase that is returned as a string."""
     four_words = pick_random_set(word_list, 4)
     phrase = ' '.join(four_words)
     return phrase
@@ -260,6 +290,16 @@ def main():
                 ['<N6>agar-agar+Pl+Abl']
                 ))
 
+        for word in words:
+            print(word)
+
+        print()
+
+        print("Debugging plural-only words:")
+
+        words = apply_inflection_rules(apply_consonant_gradation(
+                ['<N1>aivot+Sg+Abl']
+                ))
         for word in words:
             print(word)
 
