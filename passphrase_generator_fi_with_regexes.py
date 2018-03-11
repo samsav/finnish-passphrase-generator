@@ -7,7 +7,6 @@ import re
 # TODO:
 # - use secrets instead of random?
 # - add support for alternative forms in e.g. plural genitive and partitive?
-# - enable clitics
 # - add support for forming compounds?
 
 
@@ -43,7 +42,8 @@ def select_inflection_paradigms(word_entries, lower_limit, upper_limit):
 
 
 # Pick X word entries at random. Using random.sample here to avoid getting
-# duplicates. Will replace with random.choices for final version. (Or secrets.)
+# duplicates in the output. Will replace with random.choices or
+# the secrets module in the future.
 def pick_random_set(word_list, size_of_set):
     """Randomly select a subset of the input word list."""
     random_entries = random.sample(word_list, k=size_of_set)
@@ -253,7 +253,9 @@ def debug():
                                            '<N9E>lapa+Sg+Gen',
                                            '<N48E>taive+Sg+Gen',
                                            '<N1F>satu+Sg+All',
-                                           '<N5J>evakuointi+Sg+Gen'])
+                                           '<N5J>evakuointi+Sg+Gen',
+                                           '<N9D>vika+Sg+Gen',
+                                           '<N32D>ien+Sg+Ill'])
     print("\nApplied consonant gradation:")
     for word in singulars:
         print(word)
@@ -266,7 +268,9 @@ def debug():
                                          '<N48E>taive+Pl+Nom',
                                          '<N1F>satu+Pl+Ine',
                                          '<N5J>evakuointi+Pl+Ade',
-                                         '<N5J>fosforointi+Pl+Gen'])
+                                         '<N5J>fosforointi+Pl+Gen',
+                                         '<N9D>vika+Pl+Nom',
+                                         '<N32D>ien+Pl+Par'])
     print("\nApplied consonant gradation:")
     for word in plurals:
         print(word)

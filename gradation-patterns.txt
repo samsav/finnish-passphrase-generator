@@ -1,26 +1,43 @@
 # Consonant gradation patterns
 
 # Patterns A, B, and C
+# pp : p, tt : t, kk : k
 \<N\d*[ABC]\>\w+(p|t|k)\1\w+\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)\1(?=\w{1,2}\+)   \1
 \<N\d*[ABC]\>\w+(p|t|k)\1\w+\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)\1(?=\w{1,2}\+)   \1
+# p : pp, t : tt, k : kk
 \<N\d*[ABC]\>\w*[aoueiäöy](p|t|k)[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)(?=\w{1,2}\+)   \1\1
 \<N\d*[ABC]\>\w*[aoueiäöy](p|t|k)[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)(?=\w{1,2}\+)   \1\1
 
+# Pattern D
+# k : -
+# vika : vian, korko : koron
+\<N\d*D\>\w+k[aoueiäöy]\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    (\w)k(\w)    \1\2
+\<N\d*D\>\w+k[aoueiäöy]\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    (\w)k(\w)    \1\2
+# - : k
+# rae : rakeen, aie : aikeen, ien : ikenen
+\<N\d*D\>\w+\+Sg\+(Gen|Ine|Ela|Ill|Ade|All|Abl|Ess|Tra)            ([ai])(e)(?=\w?)    \1k\2
+\<N\d*D\>\w+\+Pl\+(Nom|Gen|Par|Ine|Ela|Ill|Ade|All|Abl|Ess|Tra)    ([ai])(e)(?=\w?)    \1k\2
 
 # Pattern E
+# p : v
 \<N\d*E\>\w+[aoueiäöy]p[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])p([aoueiäöy])    \1v\2
 \<N\d*E\>\w+[aoueiäöy]p[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])p([aoueiäöy])    \1v\2
+# v:p
 \<N\d*E\>\w+[aoueiäöy]v[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])v([aoueiäöy])    \1p\2
 \<N\d*E\>\w+[aoueiäöy]v[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])v([aoueiäöy])    \1p\2
 
 # Pattern F
+# t : d
 \<N\d*F\>\w+[aoueiäöy]t[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])t([aoueiäöy])    \1d\2
 \<N\d*F\>\w+[aoueiäöy]t[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])t([aoueiäöy])    \1d\2
+# d : t
 \<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])d([aoueiäöy])    \1t\2
 \<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])d([aoueiäöy])    \1t\2
 
 # Pattern J
+# nt : nn
 \<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nt([aoueiäöy])   \1nn\2
 \<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nt([aoueiäöy])   \1nn\2
+# nn : nt
 \<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nn([aoueiäöy])   \1nt\2
 \<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nn([aoueiäöy])   \1nt\2
