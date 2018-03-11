@@ -77,8 +77,8 @@ def attach_noun_endings(noun):
     """Attach random number, inflection, and clitic endings to a noun."""
     number = random.choice(number_set)
     inflection = random.choice(inflection_set)
-    # clitic = random.choice(clitic_set)
-    noun = noun + number + inflection
+    clitic = random.choice(clitic_set)
+    noun = noun + number + inflection + clitic
     return noun
 
 
@@ -236,7 +236,7 @@ def form_passphrase(word_list):
     four_words = pick_random_set(word_list, 4)
     # Words appearing in the +Sg+Nom form have a trailing space after them:
     # use rstrip() to clean that
-    phrase = ' '.join([word.rstrip() for word in four_words])
+    phrase = ' '.join([word.replace(' ', '') for word in four_words])
     return phrase
 
 
@@ -292,6 +292,16 @@ def debug():
     for word in words:
         print(word)
 
+    print("\nDebugging inflection patterns:")
+    words = apply_inflection_rules(apply_consonant_gradation(
+            ['<N7>salmi+Pl+Tra',
+             '<N7>salmi+Sg+Ill',
+             '<N8>genre+Sg+Ill',
+             '<N8>genre+Pl+Ill']
+            ))
+    for word in words:
+        print(word)
+
 
 def main():
     print("Welcome to the Finnish passphrase generator!\n")
@@ -300,7 +310,7 @@ def main():
     full_word_list = prepare_full_list('kotus_sanalista/testilista.xml')
 
     # Pick nouns from inflection paradigms 1-6
-    nouns = select_inflection_paradigms(full_word_list, 1, 6)
+    nouns = select_inflection_paradigms(full_word_list, 1, 8)
 
     while True:
         # Simple control loop that only enforces exit condition
@@ -325,7 +335,7 @@ def main():
         print("\nHere are some possible phrases:\n")
         for i in range(0, 4):
             phrase = form_passphrase(final_nouns)
-            print("{0} merkkiä: {1}\n".format(len(phrase), phrase))
+            print("{0} characters: {1}\n".format(len(phrase), phrase))
 
         print()
 

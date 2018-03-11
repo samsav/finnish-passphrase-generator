@@ -98,7 +98,7 @@
 \<N[56][A-M]?\>[\w-]+[^i]\+Pl\+Tra		\+Pl\+Tra     eiksi
 
 # Pattern 7
-# Nearly all words in this paradigm end in an i; there are 4 plural words
+# Nearly all words in this paradigm end in -i; there are 4 plural words
 # belonging to this pattern in the word list (e.g. sakset)
 \<N7[A-M]?\>[\w-]+\+Sg\+Nom    \+Sg\+Nom     _
 \<N7[A-M]?\>[\w-]+\+Sg\+Gen    i\+Sg\+Gen    en
@@ -122,3 +122,28 @@
 \<N7[A-M]?\>[\w-]+\+Pl\+All    \+Pl\+All     lle
 \<N7[A-M]?\>[\w-]+\+Pl\+Ess    \+Pl\+Ess     nA
 \<N7[A-M]?\>[\w-]+\+Pl\+Tra    \+Pl\+Tra     ksi
+
+# Pattern 8
+# Mostly loan words ending in -e (e.g. beagle, genre)
+\<N8[A-M]?\>[\w-]+\+Sg\+Nom    \+Sg\+Nom    _
+\<N8[A-M]?\>[\w-]+\+Sg\+Gen    \+Sg\+Gen    n
+\<N8[A-M]?\>[\w-]+\+Sg\+Par    \+Sg\+Par    A
+\<N8[A-M]?\>[\w-]+\+Sg\+Ill    \+Sg\+Ill    en
+\<N8[A-M]?\>[\w-]+\+Sg\+Ine    \+Sg\+Ine    ssA
+\<N8[A-M]?\>[\w-]+\+Sg\+Ela    \+Sg\+Ela    stA
+\<N8[A-M]?\>[\w-]+\+Sg\+Ade    \+Sg\+Ade    llA
+\<N8[A-M]?\>[\w-]+\+Sg\+Abl    \+Sg\+Abl    ltA
+\<N8[A-M]?\>[\w-]+\+Sg\+All    \+Sg\+All    lle
+\<N8[A-M]?\>[\w-]+\+Sg\+Ess    \+Sg\+Ess    nA
+\<N8[A-M]?\>[\w-]+\+Sg\+Tra    \+Sg\+Tra    ksi
+\<N8[A-M]?\>[\w-]+\+Pl\+Nom    \+Pl\+Nom    t
+\<N8[A-M]?\>[\w-]+\+Pl\+Gen    \+Pl\+Gen    jen
+\<N8[A-M]?\>[\w-]+\+Pl\+Par    \+Pl\+Par    jA
+\<N8[A-M]?\>[\w-]+\+Pl\+Ill    \+Pl\+Ill    ihin
+\<N8[A-M]?\>[\w-]+\+Pl\+Ine    \+Pl\+Ine    issA
+\<N8[A-M]?\>[\w-]+\+Pl\+Ela    \+Pl\+Ela    istA
+\<N8[A-M]?\>[\w-]+\+Pl\+Ade    \+Pl\+Ade    illA
+\<N8[A-M]?\>[\w-]+\+Pl\+Abl    \+Pl\+Abl    iltA
+\<N8[A-M]?\>[\w-]+\+Pl\+All    \+Pl\+All    ille
+\<N8[A-M]?\>[\w-]+\+Pl\+Ess    \+Pl\+Ess    inA
+\<N8[A-M]?\>[\w-]+\+Pl\+Tra    \+Pl\+Tra    iksi
