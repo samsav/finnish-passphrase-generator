@@ -125,7 +125,6 @@ def initialize_rules(pattern_file):
 
 
 gradations = initialize_rules('gradation-patterns.txt')
-
 inflections = initialize_rules('inflection-patterns.txt')
 
 
@@ -199,13 +198,28 @@ def apply_vowel_harmony(word_list):
     words_with_vowel_harmony = []
     for word in word_list:
         print(word)
-        if 'a' in word or 'o' in word or 'u' in word:
+        if determine_vowel_harmony(word):
             word = word.translate(str.maketrans("AO", "ao"))
             words_with_vowel_harmony.append(word)
         else:
             word = word.translate(str.maketrans("AO", "äö"))
             words_with_vowel_harmony.append(word)
     return words_with_vowel_harmony
+
+
+def determine_vowel_harmony(word):
+    """A fairly simplistic algorithm for determining the vowel harmony
+       of a word."""
+    reversed_word = word[::-1]
+    back_vowel_determines_harmony = False
+    for c in reversed_word:
+        if c in 'äö':
+            break
+        if c in 'aou':
+            back_vowel_determines_harmony = True
+            break
+
+    return back_vowel_determines_harmony
 
 
 def form_passphrase(word_list):
@@ -260,6 +274,13 @@ def debug():
     for word in words:
         print(word)
 
+    print("\nDebugging loan words ending in consonants:")
+    words = apply_inflection_rules(apply_consonant_gradation(
+            ['<N5>ekstranet+Pl+Tra']
+            ))
+    for word in words:
+        print(word)
+
 
 def main():
     print("Welcome to the Finnish passphrase generator!\n")
@@ -296,6 +317,8 @@ def main():
             print("{0} merkkiä: {1}\n".format(len(phrase), phrase))
 
         print()
+
+        debug()
 
 
 if __name__ == '__main__':
