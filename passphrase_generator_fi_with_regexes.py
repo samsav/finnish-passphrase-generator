@@ -17,7 +17,7 @@ def prepare_full_list(file_path):
     print("Parsing XML file...\n")
     with open(file_path, 'r') as fp:
         soup = BeautifulSoup(fp, 'lxml')
-    # Read all word entries directly into a variable; the resulting
+    # Read all word entries directly into a variable: the resulting
     # bs4.element.ResultSet object can be manipulated like a list
     print("Listing word entries...\n")
     word_entries = soup.find_all('st')
@@ -26,7 +26,7 @@ def prepare_full_list(file_path):
 
 # TODO: use *args to pass an arbitrary set of inflection numbers
 #       to the function?
-# Note that some entries do not have a <t> field in the word list;
+# Note that some entries do not have a <t> field in the word list:
 # these appear to be compound nouns. Currently these entries are excluded.
 def select_inflection_paradigms(word_entries, lower_limit, upper_limit):
     """Select word entries that have specific inflection paradigms
@@ -62,7 +62,7 @@ def compose_nouns(word_list):
         infl_paradigm = 'N'
         grad_paradigm = ''
         # the first 51 inflection paradigms in the Kotus word list cover nouns
-        if word_entry.t is not None and int(word_entry.t.tn.string) < 52:
+        if word_entry.t is not None:
             infl_paradigm += word_entry.t.tn.string
         if word_entry.av is not None:
             grad_paradigm = word_entry.av.string
@@ -82,14 +82,13 @@ def attach_noun_endings(noun):
     return noun
 
 
+# Sets for noun endings
 number_set = ['+Sg', '+Pl']
-
 inflection_set = ['+Nom', '+Gen', '+Par',
                   '+Ine', '+Ela', '+Ill',
                   '+Ade', '+Abl', '+All',
                   '+Ess', '+Tra']
-
-clitic_set = ['', 'hAn', 'kin', 'kO', 'pA']
+clitic_set = ['', 'hAn', 'kin', 'kO', 'pA', 'pAs']
 
 
 # This approach of handling the necessary regex functions by using closures
@@ -216,7 +215,7 @@ def apply_vowel_harmony(word_list):
 # In loan words that allow alternative realizations of vowel harmony (such as
 # analyysia ~ analyysiä), vowel harmony is realized with back vowels.
 def back_vowel_determines_harmony(word):
-    """A fairly simplistic algorithm for determining the vowel harmony
+    """A simplistic algorithm for determining the vowel harmony
        of a word."""
     reversed_word = word[::-1]
     back_vowel_determines_harmony = False
@@ -234,8 +233,7 @@ def form_passphrase(word_list):
     """A helper function for turning four random words in a list
        into a passphrase that is returned as a string."""
     four_words = pick_random_set(word_list, 4)
-    # Words appearing in the +Sg+Nom form have a trailing space after them:
-    # use rstrip() to clean that
+    # clear possible internal spaces from words
     phrase = ' '.join([word.replace(' ', '') for word in four_words])
     return phrase
 
@@ -315,9 +313,9 @@ def main():
     print("Welcome to the Finnish passphrase generator!\n")
 
     # Parse the XML file for the full word list
-    full_word_list = prepare_full_list('kotus_sanalista/testilista.xml')
+    full_word_list = prepare_full_list('kotus_sanalista/kotus-sanalista_v1.xml')
 
-    # Pick nouns from inflection paradigms 1-6
+    # Pick nouns from inflection paradigms 1-10
     nouns = select_inflection_paradigms(full_word_list, 1, 10)
 
     while True:
@@ -348,7 +346,7 @@ def main():
         print()
 
         # Uncomment to enable debugging output
-        debug()
+        # debug()
 
 
 if __name__ == '__main__':
