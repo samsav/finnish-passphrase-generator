@@ -3,6 +3,9 @@
 # Patterns A, B, and C
 \<N\d*[ABC]\>\w+(p|t|k)\1\w+\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)\1(?=\w{1,2}\+)   \1
 \<N\d*[ABC]\>\w+(p|t|k)\1\w+\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)\1(?=\w{1,2}\+)   \1
+\<N\d*[ABC]\>\w*[aoueiäöy](p|t|k)[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)(?=\w{1,2}\+)   \1\1
+\<N\d*[ABC]\>\w*[aoueiäöy](p|t|k)[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)(?=\w{1,2}\+)   \1\1
+
 
 # Pattern E
 \<N\d*E\>\w+[aoueiäöy]p[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])p([aoueiäöy])    \1v\2

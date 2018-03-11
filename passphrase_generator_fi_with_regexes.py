@@ -7,7 +7,6 @@ import re
 # TODO:
 # - use secrets instead of random?
 # - add support for alternative forms in e.g. plural genitive and partitive?
-# - fix vowel harmony
 # - enable clitics
 # - add support for forming compounds?
 
@@ -198,7 +197,7 @@ def apply_vowel_harmony(word_list):
     words_with_vowel_harmony = []
     for word in word_list:
         print(word)
-        if determine_vowel_harmony(word):
+        if back_vowel_determines_harmony(word):
             word = word.translate(str.maketrans("AO", "ao"))
             words_with_vowel_harmony.append(word)
         else:
@@ -207,7 +206,16 @@ def apply_vowel_harmony(word_list):
     return words_with_vowel_harmony
 
 
-def determine_vowel_harmony(word):
+# The vowel harmony of loan words containing both back and front vowels
+# is not entirely straightforward. The following way for determining
+# vowel harmony is based on the rules in the article "Kompromisseja vai
+# kompromissejä: vierassanojen taivutuspäätteen vokaali" by Sari Maamies
+# (see https://www.kielikello.fi/-/kompromisseja-vai-kompromisseja-vierassanojen-taivutuspaatteen-vokaali).
+# The algorithm below only implements the rules for non-compounded loan words,
+# which also produce mostly the correct forms of non-compounded non-loan words.
+# In loan words that allow alternative realizations of vowel harmony (such as
+# analyysia ~ analyysiä), vowel harmony is realized with back vowels.
+def back_vowel_determines_harmony(word):
     """A fairly simplistic algorithm for determining the vowel harmony
        of a word."""
     reversed_word = word[::-1]
@@ -226,7 +234,9 @@ def form_passphrase(word_list):
     """A helper function for turning four random words in a list
        into a passphrase that is returned as a string."""
     four_words = pick_random_set(word_list, 4)
-    phrase = ' '.join(four_words)
+    # Words appearing in the +Sg+Nom form have a trailing space after them:
+    # use rstrip() to clean that
+    phrase = ' '.join([word.rstrip() for word in four_words])
     return phrase
 
 
@@ -237,6 +247,7 @@ def debug():
     print("Debugging consonant gradation:")
     print("\nSingulars:")
     singulars = apply_consonant_gradation(['<N1A>baarimikko+Sg+Tra',
+                                           '<N48A>hake+Sg+Gen',
                                            '<N5C>attentaatti+Sg+Tra',
                                            '<N5B>kaappi+Sg+Tra',
                                            '<N9E>lapa+Sg+Gen',
@@ -318,6 +329,7 @@ def main():
 
         print()
 
+        # Uncomment to enable debugging output
         debug()
 
 
