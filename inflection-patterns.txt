@@ -1,7 +1,7 @@
 # Inflection patterns
 
 # Patterns 1, 2, and 4
-\<N[124][A-M]?\>\w+\+Sg\+Nom		\+Sg\+Nom               \b
+\<N[124][A-M]?\>\w+\+Sg\+Nom		\+Sg\+Nom               _
 \<N[124][A-M]?\>\w+\+Sg\+Gen		\+Sg\+Gen		            n
 \<N[124][A-M]?\>\w+\+Sg\+Par		\+Sg\+Par		            A
 \<N[124][A-M]?\>\w+\+Sg\+Ill		([aoueiäöy])\+Sg\+Ill		\1\1n
@@ -25,7 +25,7 @@
 \<N[124][A-M]?\>\w+\+Pl\+Tra		\+Pl\+Tra               iksi
 
 # Pattern 3
-\<N3[A-M]?\>\w+\+Sg\+Nom		\+Sg\+Nom                   \b
+\<N3[A-M]?\>\w+\+Sg\+Nom		\+Sg\+Nom                   _
 \<N3[A-M]?\>\w+\+Sg\+Gen		\+Sg\+Gen                   n
 \<N3[A-M]?\>\w+\+Sg\+Par		\+Sg\+Par                   tA
 \<N3[A-M]?\>\w+\+Sg\+Ill		([aoueiäöy])\+Sg\+Ill		    \1\1n
@@ -50,7 +50,7 @@
 
 # Patterns 5 and 6: words ending in i (in these paradigms, i is the only
 # allowed final vowel)
-\<N[56][A-M]?\>[\w-]+i\+Sg\+Nom		\+Sg\+Nom     \b
+\<N[56][A-M]?\>[\w-]+i\+Sg\+Nom		\+Sg\+Nom     _
 \<N[56][A-M]?\>[\w-]+i\+Sg\+Gen		\+Sg\+Gen     n
 \<N[56][A-M]?\>[\w-]+i\+Sg\+Par		\+Sg\+Par     A
 \<N[56][A-M]?\>[\w-]+i\+Sg\+Ill		\+Sg\+Ill     in
@@ -74,7 +74,7 @@
 \<N[56][A-M]?\>[\w-]+i\+Pl\+Tra		i\+Pl\+Tra		eiksi
 
 # Patterns 5 and 6: loan words that end in a consonant
-\<N[56][A-M]?\>[\w-]+[^i]\+Sg\+Nom		\+Sg\+Nom     \b
+\<N[56][A-M]?\>[\w-]+[^i]\+Sg\+Nom		\+Sg\+Nom     _
 \<N[56][A-M]?\>[\w-]+[^i]\+Sg\+Gen		\+Sg\+Gen     in
 \<N[56][A-M]?\>[\w-]+[^i]\+Sg\+Par		\+Sg\+Par     iA
 \<N[56][A-M]?\>[\w-]+[^i]\+Sg\+Ill		\+Sg\+Ill     iin
