@@ -299,7 +299,9 @@ def debug():
              '<N8>genre+Sg+Ill',
              '<N8>genre+Pl+Ill',
              '<N9J>kähmintä+Pl+Par',
-             '<N9>kala+Pl+Ill']
+             '<N9>kala+Pl+Ill',
+             '<N10F>pöytä+Sg+Gen',
+             '<N10>koira+Pl+Ill']
             ))
     for word in apply_vowel_harmony(words):
         print(word)
@@ -312,7 +314,7 @@ def main():
     full_word_list = prepare_full_list('kotus_sanalista/testilista.xml')
 
     # Pick nouns from inflection paradigms 1-6
-    nouns = select_inflection_paradigms(full_word_list, 1, 9)
+    nouns = select_inflection_paradigms(full_word_list, 1, 10)
 
     while True:
         # Simple control loop that only enforces exit condition
