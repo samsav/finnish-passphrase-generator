@@ -96,3 +96,29 @@
 \<N[56][A-M]?\>[\w-]+[^i]\+Pl\+All		\+Pl\+All     eille
 \<N[56][A-M]?\>[\w-]+[^i]\+Pl\+Ess		\+Pl\+Ess     einA
 \<N[56][A-M]?\>[\w-]+[^i]\+Pl\+Tra		\+Pl\+Tra     eiksi
+
+# Pattern 7
+# Nearly all words in this paradigm end in an i; there are 4 plural words
+# belonging to this pattern in the word list (e.g. sakset)
+\<N7[A-M]?\>[\w-]+\+Sg\+Nom    \+Sg\+Nom     _
+\<N7[A-M]?\>[\w-]+\+Sg\+Gen    i\+Sg\+Gen    en
+\<N7[A-M]?\>[\w-]+\+Sg\+Par    i\+Sg\+Par    eA
+\<N7[A-M]?\>[\w-]+\+Sg\+Ill    i\+Sg\+Ill    een
+\<N7[A-M]?\>[\w-]+\+Sg\+Ine    i\+Sg\+Ine    essA
+\<N7[A-M]?\>[\w-]+\+Sg\+Ela    i\+Sg\+Ela    estA
+\<N7[A-M]?\>[\w-]+\+Sg\+Ade    i\+Sg\+Ade    ellA
+\<N7[A-M]?\>[\w-]+\+Sg\+Abl    i\+Sg\+Abl    eltA
+\<N7[A-M]?\>[\w-]+\+Sg\+All    i\+Sg\+All    elle
+\<N7[A-M]?\>[\w-]+\+Sg\+Ess    i\+Sg\+Ess    enA
+\<N7[A-M]?\>[\w-]+\+Sg\+Tra    i\+Sg\+Tra    eksi
+\<N7[A-M]?\>[\w-]+\+Pl\+Nom    i\+Pl\+Nom    et
+\<N7[A-M]?\>[\w-]+\+Pl\+Gen    \+Pl\+Gen     en
+\<N7[A-M]?\>[\w-]+\+Pl\+Par    \+Pl\+Par     A
+\<N7[A-M]?\>[\w-]+\+Pl\+Ill    \+Pl\+Ill     in
+\<N7[A-M]?\>[\w-]+\+Pl\+Ine    \+Pl\+Ine     ssA
+\<N7[A-M]?\>[\w-]+\+Pl\+Ela    \+Pl\+Ela     stA
+\<N7[A-M]?\>[\w-]+\+Pl\+Ade    \+Pl\+Ade     llA
+\<N7[A-M]?\>[\w-]+\+Pl\+Abl    \+Pl\+Abl     ltA
+\<N7[A-M]?\>[\w-]+\+Pl\+All    \+Pl\+All     lle
+\<N7[A-M]?\>[\w-]+\+Pl\+Ess    \+Pl\+Ess     nA
+\<N7[A-M]?\>[\w-]+\+Pl\+Tra    \+Pl\+Tra     ksi
