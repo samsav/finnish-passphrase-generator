@@ -44,13 +44,6 @@ Thumbs.db
 /include/*
 /lib/*
 /share/*
-/report/*
 /kotus_sanalista/*
-*.lexc
-*.tex
-lda-t3101_technical-project_notes.md
 pip-selfcheck.json
 pyvenv.cfg
-first_session.py
-testi.txt
-tech-project_script_v1.py
