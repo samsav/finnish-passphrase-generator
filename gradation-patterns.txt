@@ -10,7 +10,7 @@
 
 # Pattern D
 # k : -
-# vika : vian, korko : koron
+# vika : vian, korko : koron, taika : taian
 \<N\d*D\>\w+k[aoueiäöy]\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    (\w)k(\w)    \1\2
 \<N\d*D\>\w+k[aoueiäöy]\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    (\w)k(\w)    \1\2
 # - : k
