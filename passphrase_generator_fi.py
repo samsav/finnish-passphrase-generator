@@ -61,7 +61,6 @@ def compose_nouns(word_list):
         word = word_entry.s.string.replace(' ', '_')
         infl_paradigm = 'N'
         grad_paradigm = ''
-        # the first 51 inflection paradigms in the Kotus word list cover nouns
         if word_entry.t is not None:
             infl_paradigm += word_entry.t.tn.string
         if word_entry.av is not None:
@@ -77,8 +76,11 @@ def attach_noun_endings(noun):
     """Attach random number, inflection, and clitic endings to a noun."""
     number = random.choice(number_set)
     inflection = random.choice(inflection_set)
-    clitic = random.choice(clitic_set)
-    noun = noun + number + inflection + clitic
+    noun = noun + number + inflection
+    # Clitic particles are turned off. Uncomment the following two lines
+    # to turn them on.
+    # clitic = random.choice(clitic_set)
+    # noun = noun + number + inflection + clitic
     return noun
 
 
@@ -212,8 +214,6 @@ def apply_vowel_harmony(word_list):
 # (see https://www.kielikello.fi/-/kompromisseja-vai-kompromisseja-vierassanojen-taivutuspaatteen-vokaali).
 # The algorithm below only implements the rules for non-compounded loan words,
 # which also produce mostly the correct forms of non-compounded non-loan words.
-# In loan words that allow alternative realizations of vowel harmony (such as
-# analyysia ~ analyysiä), vowel harmony is realized with back vowels.
 def back_vowel_determines_harmony(word):
     """A simplistic algorithm for determining the vowel harmony
        of a word."""
@@ -307,6 +307,7 @@ def debug():
             ))
     for word in apply_vowel_harmony(words):
         print(word)
+    print()
 
 
 def main():
@@ -322,6 +323,7 @@ def main():
         # Simple control loop that only enforces exit condition
         command = input("Generate phrases? y/n ")
         if command == "n":
+            print("Bye!")
             break
 
         # For each run of the loop, pick a new random set from the list of
