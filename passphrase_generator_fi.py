@@ -167,7 +167,7 @@ def apply_consonant_gradation(word_list):
     for word in word_list:
         print(word)
         # TODO: move checking for plurals to a separate function
-        if re.search(r't\+Sg', word):
+        if re.search(r't\+Sg', word) and '_' not in word:
             word = convert_to_plural(word)
         word = gradate(word)
         gradated_words.append(word)
@@ -227,6 +227,21 @@ def back_vowel_determines_harmony(word):
             break
 
     return back_vowel_determines_harmony
+
+
+def replace_i_with_j(word):
+    word = re.sub(r'(\w)aia', r'\1aja', word)
+    return word
+
+
+def apply_other_transformations(word_list):
+    words = []
+    for word in word_list:
+        if re.search(r'[^t]aia', word):
+            word = replace_i_with_j(word)
+        words.append(word)
+
+    return words
 
 
 def form_passphrase(word_list):
@@ -334,7 +349,8 @@ def main():
         lexical_nouns = compose_nouns(random_nouns)
         gradated_nouns = apply_consonant_gradation(lexical_nouns)
         inflected_nouns = apply_inflection_rules(gradated_nouns)
-        final_nouns = apply_vowel_harmony(inflected_nouns)
+        almost_done = apply_other_transformations(inflected_nouns)
+        final_nouns = apply_vowel_harmony(almost_done)
 
         print("\nHere are the words with all transformations applied:")
         for word in final_nouns:
