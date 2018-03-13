@@ -59,6 +59,8 @@ def compose_nouns(word_list):
 
     print("Composing noun entries...")
     nouns = []
+    # TODO: separate prepending paradigms and attaching endings into different
+    # functions? can list comprehensions be used here?
     for word_entry in word_list:
         # replace spaces with underscores to simplify later regexes
         word = word_entry.s.string.replace(' ', '_')
@@ -153,6 +155,7 @@ def inflect(word):
     return word
 
 
+# TODO: remove temporary variable
 def convert_to_plural(word):
     """Helper function for ensuring that words only appearing in the
        plural form (such as 'aivot' or 'häät') are lexically represented
@@ -166,6 +169,7 @@ def apply_consonant_gradation(word_list):
        the results in a list."""
     # include a print statement for debugging
     print("\nApplying gradation rules to these lexical forms:")
+    # TODO: after removing checking for plurals, rewrite as list comprehension
     gradated_words = []
     for word in word_list:
         print(word)
@@ -247,6 +251,7 @@ def apply_other_transformations(word_list):
     return words
 
 
+# TODO: remove temporary variable
 def form_passphrase(word_list):
     """A helper function for turning four random words in a list
        into a passphrase that is returned as a string."""
