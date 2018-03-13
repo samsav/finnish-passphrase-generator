@@ -8,6 +8,9 @@ import re
 # - use secrets instead of random?
 # - add support for alternative forms in e.g. plural genitive and partitive?
 # - add support for forming compounds?
+# - reduce startup time by saving the parsed XML into a file?
+# - refactor (use more list comprehensions?)
+# - split code into two or more modules?
 
 
 def prepare_full_list(file_path):
