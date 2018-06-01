@@ -1,16 +1,16 @@
 from bs4 import BeautifulSoup
-import random
+import secrets
 import re
 
 """A simple passphrase generator for Finnish"""
 
 # TODO:
-# - use secrets instead of random?
-# - add support for alternative forms in e.g. plural genitive and partitive?
-# - add support for forming compounds?
+# - use secrets instead of random
+# - add support for alternative forms in e.g. plural genitive and partitive
+# - add support for forming compounds
 # - reduce startup time by saving the parsed XML into a file?
 # - refactor (use more list comprehensions?)
-# - split code into two or more modules?
+# - split code into two or more modules
 
 
 def prepare_full_list(file_path):
@@ -44,12 +44,9 @@ def select_inflection_paradigms(word_entries, lower_limit, upper_limit):
     return word_entries_with_selected_infls
 
 
-# Pick X word entries at random. Using random.sample here to avoid getting
-# duplicates in the output. Will replace with random.choices or
-# the secrets module in the future.
 def pick_random_set(word_list, size_of_set):
     """Randomly select a subset of the input word list."""
-    random_entries = random.sample(word_list, k=size_of_set)
+    random_entries = [secrets.choice(word_list) for i in range(size_of_set)]
     return random_entries
 
 
@@ -79,13 +76,12 @@ def compose_nouns(word_list):
 
 def attach_noun_endings(noun):
     """Attach random number, inflection, and clitic endings to a noun."""
-    number = random.choice(number_set)
-    inflection = random.choice(inflection_set)
+    number = secrets.choice(number_set)
+    inflection = secrets.choice(inflection_set)
+    # Note: clitic particles are turned off.
+    # clitic = secrets.choice(clitic_set)
     noun = noun + number + inflection
-    # Clitic particles are turned off. Uncomment the following two lines
-    # to turn them on.
-    # clitic = random.choice(clitic_set)
-    # noun = noun + number + inflection + clitic
+
     return noun
 
 
@@ -217,8 +213,8 @@ def apply_vowel_harmony(word_list):
 # The vowel harmony of loan words containing both back and front vowels
 # is not entirely straightforward. The following way for determining
 # vowel harmony is based on the rules in the article "Kompromisseja vai
-# kompromissejä: vierassanojen taivutuspäätteen vokaali" by Sari Maamies
-# (see https://www.kielikello.fi/-/kompromisseja-vai-kompromisseja-vierassanojen-taivutuspaatteen-vokaali).
+# kompromissejä: vierassanojen taivutuspäätteen vokaali" by Sari Maamies.
+#
 # The algorithm below only implements the rules for non-compounded loan words,
 # which also produce mostly the correct forms of non-compounded non-loan words.
 def back_vowel_determines_harmony(word):
@@ -337,7 +333,7 @@ def main():
     print("Welcome to the Finnish passphrase generator!\n")
 
     # Parse the XML file for the full word list
-    full_word_list = prepare_full_list('kotus_sanalista/kotus-sanalista_v1.xml')
+    full_word_list = prepare_full_list('kotus-sanalista_v1/kotus-sanalista_v1.xml')
 
     # Pick nouns from inflection paradigms 1-10
     nouns = select_inflection_paradigms(full_word_list, 1, 10)
