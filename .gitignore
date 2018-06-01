@@ -40,10 +40,7 @@ Thumbs.db
 
 # Project-specific #
 ####################
-/bin/*
-/include/*
-/lib/*
-/share/*
-/kotus_sanalista/*
-pip-selfcheck.json
-pyvenv.cfg
+/kotus-sanalista_v1/*
+notes.md
+.ropeproject/*
+.vscode/*
