@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import secrets
 import re
-from helpers import initialize_rules
+from helpers import initialize_rules, random_set
 
 
 """A simple passphrase generator for Finnish"""
@@ -54,12 +54,6 @@ def select_inflection_paradigms(word_entries, lower_limit, upper_limit):
            and int(entry.t.tn.string) <= upper_limit:
             word_entries_with_selected_infls.append(entry)
     return word_entries_with_selected_infls
-
-
-def pick_random_set(word_list, size_of_set):
-    """Randomly select a subset of the input word list."""
-    random_entries = [secrets.choice(word_list) for i in range(size_of_set)]
-    return random_entries
 
 
 def compose_nouns(word_list):
@@ -225,7 +219,7 @@ def apply_other_transformations(word_list):
 def form_passphrase(word_list):
     """A helper function for turning four random words in a list
        into a passphrase that is returned as a string."""
-    four_words = pick_random_set(word_list, 4)
+    four_words = random_set(word_list, 4)
     # clear possible internal spaces from words
     phrase = ' '.join([word.replace(' ', '') for word in four_words])
     return phrase
@@ -323,7 +317,7 @@ def main():
         # nouns created earlier. Then determine their inflection and gradation
         # paradigms using the compose_nouns() function and apply gradation,
         # inflection, and vowel harmony rules in sequence.
-        random_nouns = pick_random_set(nouns, 50)
+        random_nouns = random_set(nouns, 50)
         lexical_nouns = compose_nouns(random_nouns)
         gradated_nouns = apply_consonant_gradation(lexical_nouns)
         inflected_nouns = apply_inflection_rules(gradated_nouns)

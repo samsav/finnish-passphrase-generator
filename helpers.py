@@ -1,6 +1,7 @@
 """Helper functions for the passphrase generator"""
 
 import re
+import secrets
 
 # This approach of handling the necessary regex functions by using closures
 # to dynamically build the functions is taken from Dive into Python 3
@@ -30,3 +31,9 @@ def initialize_rules(pattern_file):
             rules.append(build_inflect_functions(pattern, search, replace))
 
     return rules
+
+
+def random_set(word_list, size_of_set):
+    """Randomly select a subset of the input word list."""
+    random_entries = [secrets.choice(word_list) for i in range(size_of_set)]
+    return random_entries
