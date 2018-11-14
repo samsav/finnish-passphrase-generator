@@ -5,12 +5,13 @@ import re
 """A simple passphrase generator for Finnish"""
 
 # TODO:
-# - use secrets instead of random
 # - add support for alternative forms in e.g. plural genitive and partitive
 # - add support for forming compounds
-# - reduce startup time by saving the parsed XML into a file?
-# - refactor (use more list comprehensions?)
-# - split code into two or more modules
+# - reduce startup time by saving the parsed XML into a file? is that possible?
+# - refactor code
+# - split code into two or more modules maybe?
+# - add option for only using base forms of words
+# - write actual tests
 
 
 def prepare_full_list(file_path):
@@ -52,7 +53,10 @@ def pick_random_set(word_list, size_of_set):
 
 def compose_nouns(word_list):
     """Prepend all noun entries in the list with their inflection
-       and gradation paradigms. Return the entries as a list."""
+       and gradation paradigms. Return the entries as a list.
+       
+       If words in the list contain spaces, the spaces are replaced with
+       underscores (_)."""
 
     print("Composing noun entries...")
     nouns = []
