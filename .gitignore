@@ -42,5 +42,6 @@ Thumbs.db
 ####################
 /kotus-sanalista_v1/*
 notes.md
-.ropeproject/*
 .vscode/*
+passphrase_generator_diagram.xml
+Pipfile.lock
