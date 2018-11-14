@@ -11,7 +11,6 @@ from helpers import initialize_rules
 # - add support for forming compounds
 # - reduce startup time by saving the parsed XML into a file? is that possible?
 # - refactor code
-# - split code into two or more modules maybe?
 # - add option for only using base forms of words
 # - write actual tests
 
