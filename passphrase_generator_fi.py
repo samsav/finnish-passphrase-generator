@@ -13,6 +13,14 @@ import re
 # - add option for only using base forms of words
 # - write actual tests
 
+# Sets for noun endings
+GRAM_NUMBER = ['+Sg', '+Pl']
+INFLECTIONS = [
+    '+Nom', '+Gen', '+Par', '+Ine', '+Ela', '+Ill', '+Ade', '+Abl', '+All',
+    '+Ess', '+Tra'
+]
+CLITICS = ['', 'hAn', 'kin', 'kO', 'pA', 'pAs']
+
 
 def prepare_full_list(file_path):
     """Parse an XML file containing a word list with BeautifulSoup and return
@@ -80,22 +88,13 @@ def compose_nouns(word_list):
 
 def attach_noun_endings(noun):
     """Attach random number, inflection, and clitic endings to a noun."""
-    number = secrets.choice(number_set)
-    inflection = secrets.choice(inflection_set)
+    number = secrets.choice(GRAM_NUMBER)
+    inflection = secrets.choice(INFLECTIONS)
     # Note: clitic particles are turned off.
-    # clitic = secrets.choice(clitic_set)
+    # clitic = secrets.choice(CLITICS)
     noun = noun + number + inflection
 
     return noun
-
-
-# Sets for noun endings
-number_set = ['+Sg', '+Pl']
-inflection_set = ['+Nom', '+Gen', '+Par',
-                  '+Ine', '+Ela', '+Ill',
-                  '+Ade', '+Abl', '+All',
-                  '+Ess', '+Tra']
-clitic_set = ['', 'hAn', 'kin', 'kO', 'pA', 'pAs']
 
 
 # This approach of handling the necessary regex functions by using closures
