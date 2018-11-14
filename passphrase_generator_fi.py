@@ -22,6 +22,8 @@ INFLECTIONS = [
     '+Ess', '+Tra'
 ]
 CLITICS = ['', 'hAn', 'kin', 'kO', 'pA', 'pAs']
+GRADATION_RULES = initialize_rules('gradation-patterns.txt')
+INFLECTION_RULES = initialize_rules('inflection-patterns.txt')
 
 
 def prepare_full_list(file_path):
@@ -99,15 +101,14 @@ def attach_noun_endings(noun):
     return noun
 
 
-gradations = initialize_rules('gradation-patterns.txt')
-inflections = initialize_rules('inflection-patterns.txt')
+
 
 
 def gradate(word):
     """Check if a word matches any gradation patterns: if yes, return the word
        with gradation replace rules applied. If no, return the original word
        in order to avoid returning None values."""
-    for match_rule, grad_rule in gradations:
+    for match_rule, grad_rule in GRADATION_RULES:
         if match_rule(word):
             return grad_rule(word)
 
@@ -118,7 +119,7 @@ def inflect(word):
     """Check if a word matches any inflection patterns: if yes, return the word
        with inflection replace rules applied. If no, return the original word
        in order to avoid returning None values."""
-    for match_rule, inflect_rule in inflections:
+    for match_rule, inflect_rule in INFLECTION_RULES:
         if match_rule(word):
             return inflect_rule(word)
 
