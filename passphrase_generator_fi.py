@@ -94,9 +94,6 @@ def attach_noun_endings(noun):
     return noun
 
 
-
-
-
 def gradate(word):
     """Check if a word matches any gradation patterns: if yes, return the word
        with gradation replace rules applied. If no, return the original word
@@ -119,13 +116,11 @@ def inflect(word):
     return word
 
 
-# TODO: remove temporary variable
 def convert_to_plural(word):
     """Helper function for ensuring that words only appearing in the
        plural form (such as 'aivot' or 'häät') are lexically represented
        as plural."""
-    word = re.sub(r't\+Sg', r'+Pl', word)
-    return word
+    return re.sub(r't\+Sg', r'+Pl', word)
 
 
 def apply_consonant_gradation(word_list):
@@ -201,8 +196,7 @@ def back_vowel_determines_harmony(word):
 
 
 def replace_i_with_j(word):
-    word = re.sub(r'(\w)aia', r'\1aja', word)
-    return word
+    return re.sub(r'(\w)aia', r'\1aja', word)
 
 
 def apply_other_transformations(word_list):
@@ -215,14 +209,12 @@ def apply_other_transformations(word_list):
     return words
 
 
-# TODO: remove temporary variable
 def form_passphrase(word_list):
     """A helper function for turning four random words in a list
        into a passphrase that is returned as a string."""
-    four_words = random_set(word_list, 4)
+    words = random_set(word_list, 4)
     # clear possible internal spaces from words
-    phrase = ' '.join([word.replace(' ', '') for word in four_words])
-    return phrase
+    return ' '.join([word.replace(' ', '') for word in words])
 
 
 def debug():
