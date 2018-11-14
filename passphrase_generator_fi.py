@@ -13,6 +13,7 @@ from helpers import initialize_rules, random_set
 # - refactor code
 # - add option for only using base forms of words
 # - write actual tests
+# - move all print statements to main function
 
 # Sets for noun endings
 GRAM_NUMBER = ['+Sg', '+Pl']
