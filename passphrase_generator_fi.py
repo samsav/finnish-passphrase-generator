@@ -26,7 +26,7 @@ GRADATION_RULES = initialize_rules('gradation-patterns.txt')
 INFLECTION_RULES = initialize_rules('inflection-patterns.txt')
 
 
-def prepare_full_list(file_path):
+def read_kotus_xml(file_path):
     """Parse an XML file containing a word list with BeautifulSoup and return
        a bs4.element.ResultSet object with all word entries from the file."""
 
@@ -45,7 +45,7 @@ def prepare_full_list(file_path):
 # Note that some entries do not have a <t> field in the word list:
 # these appear to be compound nouns. Currently these entries are excluded.
 def select_inflection_paradigms(word_entries, lower_limit, upper_limit):
-    """Select word entries that have specific inflection paradigms
+    """Select word entries that have specified inflection paradigms
        in the Kotus word list. Return the word entries as a list."""
 
     print("Picking words with desired inflection paradigms...")
@@ -61,7 +61,7 @@ def compose_nouns(word_list):
     """Prepend all noun entries in the list with their inflection
        and gradation paradigms. Return the entries as a list.
        
-       If words in the list contain spaces, the spaces are replaced with
+       If a word in the list contains spaces, the spaces are replaced with
        underscores (_)."""
 
     print("Composing noun entries...")
@@ -97,7 +97,7 @@ def attach_noun_endings(noun):
 
 def gradate(word):
     """Check if a word matches any gradation patterns: if yes, return the word
-       with gradation replace rules applied. If no, return the original word
+       with gradation replace rules applied. If not, return the original word
        in order to avoid returning None values."""
     for match_rule, grad_rule in GRADATION_RULES:
         if match_rule(word):
@@ -108,7 +108,7 @@ def gradate(word):
 
 def inflect(word):
     """Check if a word matches any inflection patterns: if yes, return the word
-       with inflection replace rules applied. If no, return the original word
+       with inflection replace rules applied. If not, return the original word
        in order to avoid returning None values."""
     for match_rule, inflect_rule in INFLECTION_RULES:
         if match_rule(word):
@@ -117,7 +117,7 @@ def inflect(word):
     return word
 
 
-def convert_to_plural(word):
+def convert_to_lexical_plural(word):
     """Helper function for ensuring that words only appearing in the
        plural form (such as 'aivot' or 'häät') are lexically represented
        as plural."""
@@ -135,7 +135,7 @@ def apply_consonant_gradation(word_list):
         print(word)
         # TODO: move checking for plurals to a separate function
         if re.search(r't\+Sg', word) and '_' not in word:
-            word = convert_to_plural(word)
+            word = convert_to_lexical_plural(word)
         word = gradate(word)
         gradated_words.append(word)
     return gradated_words
@@ -210,10 +210,10 @@ def apply_other_transformations(word_list):
     return words
 
 
-def form_passphrase(word_list):
-    """A helper function for turning four random words in a list
+def form_passphrase(word_list, length):
+    """A helper function for turning random words in a list
        into a passphrase that is returned as a string."""
-    words = random_set(word_list, 4)
+    words = random_set(word_list, length)
     # clear possible internal spaces from words
     return ' '.join([word.replace(' ', '') for word in words])
 
@@ -294,7 +294,7 @@ def main():
     print("Welcome to the Finnish passphrase generator!\n")
 
     # Parse the XML file for the full word list
-    full_word_list = prepare_full_list('kotus-sanalista_v1/kotus-sanalista_v1.xml')
+    full_word_list = read_kotus_xml('kotus-sanalista_v1/kotus-sanalista_v1.xml')
 
     # Pick nouns from inflection paradigms 1-10
     nouns = select_inflection_paradigms(full_word_list, 1, 10)
@@ -323,7 +323,7 @@ def main():
 
         print("\nHere are some possible phrases:\n")
         for i in range(0, 4):
-            phrase = form_passphrase(final_nouns)
+            phrase = form_passphrase(final_nouns, 4)
             print("{0} characters: {1}\n".format(len(phrase), phrase))
 
         print()
