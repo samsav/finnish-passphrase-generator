@@ -2,8 +2,6 @@ from bs4 import BeautifulSoup
 import secrets
 import nlp
 from helpers import random_set
-
-
 """A simple passphrase generator for Finnish"""
 
 # TODO:
@@ -59,7 +57,8 @@ def main():
     print("Welcome to the Finnish passphrase generator!\n")
 
     # Parse the XML file for the full word list
-    full_word_list = read_kotus_xml('kotus-sanalista_v1/kotus-sanalista_v1.xml')
+    full_word_list = read_kotus_xml(
+        'kotus-sanalista_v1/kotus-sanalista_v1.xml')
 
     # Pick nouns from inflection paradigms 1-10
     nouns = select_inflection_paradigms(full_word_list, 1, 10)
@@ -76,15 +75,26 @@ def main():
         # paradigms using the compose_nouns() function and apply gradation,
         # inflection, and vowel harmony rules in sequence.
         random_nouns = random_set(nouns, 50)
-        lexical_nouns = nlp.compose_nouns(random_nouns)
+        preprocessed_nouns = nlp.prepend_lexical_info(random_nouns)
+        lexical_nouns = nlp.generate_lexical_forms(preprocessed_nouns)
         gradated_nouns = nlp.apply_consonant_gradation(lexical_nouns)
         inflected_nouns = nlp.apply_inflection_rules(gradated_nouns)
         almost_done = nlp.apply_other_transformations(inflected_nouns)
         final_nouns = nlp.apply_vowel_harmony(almost_done)
 
+        processing_chain = {
+            i: [
+                lexical_nouns[i], gradated_nouns[i],
+                inflected_nouns[i], final_nouns[i]
+            ]
+            for i in range(50)
+        }
+
         print("\nHere are the words with all transformations applied:")
-        for word in final_nouns:
-            print(word)
+        for word in processing_chain.values():
+            print("{}\t{}\t{}\t{}\t".format(*word))
+        # for word in final_nouns:
+        #     print(word)
 
         print("\nHere are some possible phrases:\n")
         for i in range(0, 4):

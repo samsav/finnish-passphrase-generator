@@ -19,7 +19,7 @@ GRADATION_RULES = initialize_rules('gradation-patterns.txt')
 INFLECTION_RULES = initialize_rules('inflection-patterns.txt')
 
 
-def compose_nouns(wordlist):
+def prepend_lexical_info(wordlist):
     """Prepend all noun entries in the list with their inflection
        and gradation paradigms. Return the entries as a list.
        
@@ -27,9 +27,7 @@ def compose_nouns(wordlist):
        underscores (_)."""
 
     print("Composing noun entries...")
-    nouns = []
-    # TODO: separate prepending paradigms and attaching endings into different
-    # functions? can list comprehensions be used here?
+    words_with_lex = []
     for word_entry in wordlist:
         # replace spaces with underscores to simplify later regexes
         word = word_entry.s.string.replace(' ', '_')
@@ -40,10 +38,13 @@ def compose_nouns(wordlist):
         if word_entry.av is not None:
             grad_paradigm = word_entry.av.string
         word = '<' + infl_paradigm + grad_paradigm + '>' + word
-        word = attach_noun_endings(word)
-        nouns.append(word)
+        words_with_lex.append(word)
 
-    return nouns
+    return words_with_lex
+
+
+def generate_lexical_forms(wordlist):
+    return [attach_noun_endings(word) for word in wordlist]
 
 
 def attach_noun_endings(noun):
@@ -89,12 +90,9 @@ def convert_to_lexical_plural(word):
 def apply_consonant_gradation(wordlist):
     """Apply consonant gradation rules to a list of words and return
        the results in a list."""
-    # include a print statement for debugging
-    print("\nApplying gradation rules to these lexical forms:")
     # TODO: after removing checking for plurals, rewrite as list comprehension
     gradated_words = []
     for word in wordlist:
-        print(word)
         # TODO: move checking for plurals to a separate function
         if re.search(r't\+Sg', word) and '_' not in word:
             word = convert_to_lexical_plural(word)
@@ -106,11 +104,8 @@ def apply_consonant_gradation(wordlist):
 def apply_inflection_rules(wordlist):
     """Apply inflection rules to a list of words and return
        the results in a list."""
-    # include a print statement for debugging
-    print("\nApplying inflection rules to these lexical forms:")
     inflected_words = []
     for word in wordlist:
-        print(word)
         inflected = inflect(word)
         # TODO: move cleanup to a separate function
         cleaned = re.sub(r'\<N\d+[A-M]?\>', '', inflected)
@@ -122,11 +117,8 @@ def apply_inflection_rules(wordlist):
 def apply_vowel_harmony(wordlist):
     """Apply vowel harmony transformations to a list of words
        and return the results in a list."""
-    # include a print statement for debugging
-    print("\nApplying vowel harmony to these forms:")
     words_with_vowel_harmony = []
     for word in wordlist:
-        print(word)
         if back_vowel_determines_harmony(word):
             words_with_vowel_harmony.append(
                 word.translate(str.maketrans("AO", "ao")))
