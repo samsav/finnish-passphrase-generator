@@ -128,11 +128,11 @@ def apply_vowel_harmony(wordlist):
     for word in wordlist:
         print(word)
         if back_vowel_determines_harmony(word):
-            word = word.translate(str.maketrans("AO", "ao"))
-            words_with_vowel_harmony.append(word)
+            words_with_vowel_harmony.append(
+                word.translate(str.maketrans("AO", "ao")))
         else:
-            word = word.translate(str.maketrans("AO", "äö"))
-            words_with_vowel_harmony.append(word)
+            words_with_vowel_harmony.append(
+                word.translate(str.maketrans("AO", "äö")))
     return words_with_vowel_harmony
 
 
@@ -147,15 +147,11 @@ def back_vowel_determines_harmony(word):
     """A simplistic algorithm for determining the vowel harmony
        of a word."""
     reversed_word = word[::-1]
-    back_vowel_determines_harmony = False
     for c in reversed_word:
         if c in 'äö':
-            break
+            return False
         if c in 'aou':
-            back_vowel_determines_harmony = True
-            break
-
-    return back_vowel_determines_harmony
+            return True
 
 
 def replace_i_with_j(word):
