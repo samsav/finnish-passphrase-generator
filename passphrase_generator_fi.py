@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import secrets
-import re
 import nlp
 from helpers import random_set
 
@@ -10,9 +9,9 @@ from helpers import random_set
 # TODO:
 # - add support for alternative forms in e.g. plural genitive and partitive
 # - add support for forming compounds
+# - add option for only using base forms of words
 # - reduce startup time by saving the parsed XML into a file? is that possible?
 # - refactor code
-# - add option for only using base forms of words
 # - write actual tests
 # - move all print statements to main function
 
@@ -48,10 +47,10 @@ def select_inflection_paradigms(word_entries, lower_limit, upper_limit):
     return word_entries_with_selected_infls
 
 
-def form_passphrase(word_list, length):
+def form_passphrase(wordlist, length):
     """A helper function for turning random words in a list
        into a passphrase that is returned as a string."""
-    words = random_set(word_list, length)
+    words = random_set(wordlist, length)
     # clear possible internal spaces from words
     return ' '.join([word.replace(' ', '') for word in words])
 
