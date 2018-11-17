@@ -12,8 +12,8 @@ def debug():
     singulars = nlp.apply_consonant_gradation([
         '<N1A>baarimikko+Sg+Tra', '<N48A>hake+Sg+Gen',
         '<N5C>attentaatti+Sg+Tra', '<N5B>kaappi+Sg+Tra', '<N9E>lapa+Sg+Gen',
-        '<N48E>taive+Sg+Gen', '<N1F>satu+Sg+All', '<N5J>evakuointi+Sg+Gen',
-        '<N9D>vika+Sg+Gen', '<N32D>ien+Sg+Ill'
+        '<N48E>taive+Sg+Gen', '<N1F>satu+Sg+All', '<N10F>risteyskohta+Sg+Abl',
+        '<N5J>evakuointi+Sg+Gen', '<N9D>vika+Sg+Gen', '<N32D>ien+Sg+Ill'
     ])
     print("\nApplied consonant gradation:")
     for word in singulars:

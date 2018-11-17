@@ -138,8 +138,7 @@ def apply_vowel_harmony(wordlist):
 def back_vowel_determines_harmony(word):
     """A simplistic algorithm for determining the vowel harmony
        of a word."""
-    reversed_word = word[::-1]
-    for c in reversed_word:
+    for c in word[::-1]:
         if c in 'äö':
             return False
         if c in 'aou':
