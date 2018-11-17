@@ -82,17 +82,16 @@ def main():
         almost_done = nlp.apply_other_transformations(inflected_nouns)
         final_nouns = nlp.apply_vowel_harmony(almost_done)
 
-        processing_chain = [
-            [
-                lexical_nouns[i], gradated_nouns[i],
-                inflected_nouns[i], final_nouns[i]
-            ]
-            for i in range(50)
-        ]
+        processing_chain = [[
+            lexical_nouns[i], gradated_nouns[i], inflected_nouns[i],
+            final_nouns[i]
+        ] for i in range(50)]
 
         print("\nHere are the transformations applied to the words:")
+        print("\n{:30}\t{:30}\t{:20}\t{:20}\t".format("LEXICAL", "GRADATED",
+                                                      "INFLECTED", "FINAL"))
         for word in processing_chain:
-            print("{}\t{}\t{}\t{}\t".format(*word))
+            print("{:30}\t{:30}\t{:20}\t{:20}\t".format(*word))
 
         print("\nHere are some possible phrases:\n")
         for i in range(0, 4):
