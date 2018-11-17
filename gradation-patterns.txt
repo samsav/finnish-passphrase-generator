@@ -28,8 +28,9 @@
 
 # Pattern F
 # t : d
-\<N\d*F\>\w+[aoueiäöyh]t[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöyh])t([aoueiäöy])    \1d\2
-\<N\d*F\>\w+[aoueiäöyh]t[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöyh])t([aoueiäöy])    \1d\2
+# kohta : kohdan
+\<N\d*F\>\w+[aoueiäöyh]t[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöyh])t([aoueiäöy])(\w{0,2}\+)    \1d\2\3
+\<N\d*F\>\w+[aoueiäöyh]t[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöyh])t([aoueiäöy])(\w{0,2}\+)    \1d\2\3
 # d : t
 \<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])d([aoueiäöy])    \1t\2
 \<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])d([aoueiäöy])    \1t\2
