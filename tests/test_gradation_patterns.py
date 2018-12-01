@@ -1,4 +1,4 @@
-"""Tests for the passphrase generator"""
+"""Gradation pattern tests"""
 
 import nlp
 
@@ -24,33 +24,28 @@ def test_consonant_gradation_sg_gen(test_input, expected):
     assert nlp.gradate(test_input) == expected
 
 
+@pytest.mark.parametrize("test_input, expected",
+                         [('<N1A>baarimikko+Pl+Nom', '<N1A>baarimiko+Pl+Nom'),
+                          ('<N48A>hake+Pl+Nom', '<N48A>hakke+Pl+Nom'),
+                          ('<N5B>kaappi+Pl+Nom', '<N5B>kaapi+Pl+Nom'),
+                          ('<N41B>opas+Pl+Nom', '<N41B>oppas+Pl+Nom'),
+                          ('<N1C>tyttö+Pl+Nom', '<N1C>tytö+Pl+Nom'),
+                          ('<N48C>kate+Pl+Nom', '<N48C>katte+Pl+Nom'),
+                          ('<N9D>vika+Pl+Nom', '<N9D>via+Pl+Nom'),
+                          ('<N32D>ien+Pl+Nom', '<N32D>iken+Pl+Nom'),
+                          ('<N1E>sopu+Pl+Nom', '<N1E>sovu+Pl+Nom'),
+                          ('<N48E>taive+Pl+Nom', '<N48E>taipe+Pl+Nom'),
+                          ('<N1F>satu+Pl+Nom', '<N1F>sadu+Pl+Nom'),
+                          ('<N41F>keidas+Pl+Nom', '<N41F>keitas+Pl+Nom'),
+                          ('<N1J>hento+Pl+Nom', '<N1J>henno+Pl+Nom'),
+                          ('<N48J>vanne+Pl+Nom', '<N48J>vante+Pl+Nom')])
+def test_consonant_gradation_pl_nom(test_input, expected):
+    assert nlp.gradate(test_input) == expected
+
+
 def debug():
     """Printouts for debugging consonant gradation patterns
        and other features"""
-
-    print("Debugging consonant gradation:")
-    print("\nSingulars:")
-    singulars = nlp.apply_consonant_gradation([
-        '<N1A>baarimikko+Sg+Tra', '<N48A>hake+Sg+Gen',
-        '<N5C>attentaatti+Sg+Tra', '<N5B>kaappi+Sg+Tra', '<N9E>lapa+Sg+Gen',
-        '<N48E>taive+Sg+Gen', '<N1F>satu+Sg+All', '<N10F>risteyskohta+Sg+Abl',
-        '<N10F>päätekohta+Sg+Ela', '<N5J>evakuointi+Sg+Gen', '<N9D>vika+Sg+Gen',
-        '<N32D>ien+Sg+Ill'
-    ])
-    print("\nApplied consonant gradation:")
-    for word in singulars:
-        print(word)
-
-    print("\nPlurals:")
-    plurals = nlp.apply_consonant_gradation([
-        '<N1A>baarimikko+Pl+Tra', '<N5C>attentaatti+Pl+Tra',
-        '<N5B>kaappi+Pl+Tra', '<N9E>lapa+Pl+Nom', '<N48E>taive+Pl+Nom',
-        '<N1F>satu+Pl+Ine', '<N5J>evakuointi+Pl+Ade',
-        '<N5J>fosforointi+Pl+Gen', '<N9D>vika+Pl+Nom', '<N32D>ien+Pl+Par'
-    ])
-    print("\nApplied consonant gradation:")
-    for word in plurals:
-        print(word)
 
     print("\nDebugging word-internal hyphens:")
     words = nlp.apply_inflection_rules(
