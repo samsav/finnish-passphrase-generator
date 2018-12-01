@@ -5,14 +5,21 @@ import nlp
 import pytest
 
 
-@pytest.mark.parametrize(
-    "test_input, expected",
-    [('<N1A>baarimikko+Sg+Gen', '<N1A>baarimiko+Sg+Gen'),
-     ('<N48A>hake+Sg+Gen', '<N48A>hakke+Sg+Gen'),
-     ('<N5B>kaappi+Sg+Gen', '<N5B>kaapi+Sg+Gen'),
-     ('<N5C>attentaatti+Sg+Gen', '<N5C>attentaati+Sg+Gen'),
-     ('<N9D>vika+Sg+Gen', '<N9D>via+Sg+Gen'),
-     ('<N32D>ien+Sg+Gen', '<N32D>iken+Sg+Gen')])
+@pytest.mark.parametrize("test_input, expected",
+                         [('<N1A>baarimikko+Sg+Gen', '<N1A>baarimiko+Sg+Gen'),
+                          ('<N48A>hake+Sg+Gen', '<N48A>hakke+Sg+Gen'),
+                          ('<N5B>kaappi+Sg+Gen', '<N5B>kaapi+Sg+Gen'),
+                          ('<N41B>opas+Sg+Gen', '<N41B>oppas+Sg+Gen'),
+                          ('<N1C>tyttö+Sg+Gen', '<N1C>tytö+Sg+Gen'),
+                          ('<N48C>kate+Sg+Gen', '<N48C>katte+Sg+Gen'),
+                          ('<N9D>vika+Sg+Gen', '<N9D>via+Sg+Gen'),
+                          ('<N32D>ien+Sg+Gen', '<N32D>iken+Sg+Gen'),
+                          ('<N1E>sopu+Sg+Gen', '<N1E>sovu+Sg+Gen'),
+                          ('<N48E>taive+Sg+Gen', '<N48E>taipe+Sg+Gen'),
+                          ('<N1F>satu+Sg+Gen', '<N1F>sadu+Sg+Gen'),
+                          ('<N41F>keidas+Sg+Gen', '<N41F>keitas+Sg+Gen'),
+                          ('<N1J>hento+Sg+Gen', '<N1J>henno+Sg+Gen'),
+                          ('<N48J>vanne+Sg+Gen', '<N48J>vante+Sg+Gen')])
 def test_consonant_gradation_sg_gen(test_input, expected):
     assert nlp.gradate(test_input) == expected
 
