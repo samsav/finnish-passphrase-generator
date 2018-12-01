@@ -62,6 +62,7 @@ def main():
 
     # Pick nouns from inflection paradigms 1-10
     nouns = select_inflection_paradigms(full_word_list, 1, 10)
+    print(f"\nPicked a set of {len(nouns)} words")
 
     while True:
         # Simple control loop that only enforces exit condition
