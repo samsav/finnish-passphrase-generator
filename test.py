@@ -2,6 +2,20 @@
 
 import nlp
 
+import pytest
+
+
+@pytest.mark.parametrize(
+    "test_input, expected",
+    [('<N1A>baarimikko+Sg+Gen', '<N1A>baarimiko+Sg+Gen'),
+     ('<N48A>hake+Sg+Gen', '<N48A>hakke+Sg+Gen'),
+     ('<N5B>kaappi+Sg+Gen', '<N5B>kaapi+Sg+Gen'),
+     ('<N5C>attentaatti+Sg+Gen', '<N5C>attentaati+Sg+Gen'),
+     ('<N9D>vika+Sg+Gen', '<N9D>via+Sg+Gen'),
+     ('<N32D>ien+Sg+Gen', '<N32D>iken+Sg+Gen')])
+def test_consonant_gradation_sg_gen(test_input, expected):
+    assert nlp.gradate(test_input) == expected
+
 
 def debug():
     """Printouts for debugging consonant gradation patterns
