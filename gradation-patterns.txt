@@ -1,12 +1,40 @@
 # Consonant gradation patterns
 
-# Patterns A, B, and C
-# pp : p, tt : t, kk : k
-\<N\d*[ABC]\>\w+(p|t|k)\1\w+\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)\1(?=\w{1,2}\+)   \1
-\<N\d*[ABC]\>\w+(p|t|k)\1\w+\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)\1(?=\w{1,2}\+)   \1
-# p : pp, t : tt, k : kk
-\<N\d*[ABC]\>\w*[aoueiäöy](p|t|k)[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)(?=\w{1,2}\+)   \1\1
-\<N\d*[ABC]\>\w*[aoueiäöy](p|t|k)[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    (p|t|k)(?=\w{1,2}\+)   \1\1
+# Pattern A
+# kk : k
+# takki : takin
+# liikkua : liikun
+\<N\d*A\>\w+kk\w+\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    kk(?=\w{1,2}\+)   k
+\<N\d*A\>\w+kk\w+\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    kk(?=\w{1,2}\+)   k
+# k : kk
+# hake : hakkeen
+# pakata : pakkaan
+\<N\d*A\>\w*[aoueiäöy]k[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    k(?=\w{1,2}\+)   kk
+\<N\d*A\>\w*[aoueiäöy]k[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    k(?=\w{1,2}\+)   kk
+
+# Pattern B
+# pp : p
+# kaappi : kaapin
+# hyppiä : hypin
+\<N\d*B\>\w+pp\w+\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    pp(?=\w{1,2}\+)   p
+\<N\d*B\>\w+pp\w+\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    pp(?=\w{1,2}\+)   p
+# p : pp
+# opas : oppaan
+# napata : nappaan
+\<N\d*B\>\w*[aoueiäöy]p[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    p(?=\w{1,2}\+)   pp
+\<N\d*B\>\w*[aoueiäöy]p[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    p(?=\w{1,2}\+)   pp
+
+# Pattern C
+# tt : t
+# tyttö : tytön
+# saattaa : saatan
+\<N\d*C\>\w+tt\w+\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    tt(?=\w{1,2}\+)   t
+\<N\d*C\>\w+tt\w+\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    tt(?=\w{1,2}\+)   t
+# t : tt
+# kate : katteen
+# mitata : mittaan
+\<N\d*C\>\w*[aoueiäöy]t[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    t(?=\w{1,2}\+)   tt
+\<N\d*C\>\w*[aoueiäöy]t[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    t(?=\w{1,2}\+)   tt
 
 # Pattern D
 # k : -
@@ -20,25 +48,36 @@
 
 # Pattern E
 # p : v
+# sopu : sovun
+# viipyä : viivyn
 \<N\d*E\>\w+[aoueiäöy]p[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])p([aoueiäöy])    \1v\2
 \<N\d*E\>\w+[aoueiäöy]p[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])p([aoueiäöy])    \1v\2
-# v:p
+# v : p
+# taive : taipeen
+# levätä : lepään
 \<N\d*E\>\w+[aoueiäöy]v[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])v([aoueiäöy])    \1p\2
 \<N\d*E\>\w+[aoueiäöy]v[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])v([aoueiäöy])    \1p\2
 
 # Pattern F
 # t : d
-# kohta : kohdan
+# satu : sadun
+# pitää : pidän
 \<N\d*F\>\w+[aoueiäöyh]t[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöyh])t([aoueiäöy])(\w{0,2}\+)    \1d\2\3
 \<N\d*F\>\w+[aoueiäöyh]t[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöyh])t([aoueiäöy])(\w{0,2}\+)    \1d\2\3
 # d : t
+# keidas : keitaan
+# kohdata : kohtaan
 \<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])d([aoueiäöy])    \1t\2
 \<N\d*F\>\w+[aoueiäöy]d[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)    ([aoueiäöy])d([aoueiäöy])    \1t\2
 
 # Pattern J
 # nt : nn
+# hento : hennon
+# myöntää : myönnän
 \<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nt([aoueiäöy])   \1nn\2
 \<N\d*J\>\w+[aoueiäöy]nt[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nt([aoueiäöy])   \1nn\2
 # nn : nt
+# vanne : vanteen
+# rynnätä : ryntään
 \<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Sg\+(Gen|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nn([aoueiäöy])   \1nt\2
 \<N\d*J\>\w+[aoueiäöy]nn[aoueiäöy]\w*\+Pl\+(Nom|Ine|Ela|Ade|All|Abl|Tra)   ([aoueiäöy])nn([aoueiäöy])   \1nt\2
