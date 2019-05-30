@@ -197,3 +197,29 @@
 \<N10[A-M]?\>[\w-]+\+Pl\+All    [aä]\+Pl\+All    ille
 \<N10[A-M]?\>[\w-]+\+Pl\+Ess    [aä]\+Pl\+Ess    inA
 \<N10[A-M]?\>[\w-]+\+Pl\+Tra    [aä]\+Pl\+Tra    iksi
+
+# Pattern 11
+# omena
+
+\<N11[A-M]?\>[\w-]+\+Sg\+Nom    \+Sg\+Nom    _
+\<N11[A-M]?\>[\w-]+\+Sg\+Gen    \+Sg\+Gen    n
+\<N11[A-M]?\>[\w-]+\+Sg\+Par    \+Sg\+Par    A
+\<N11[A-M]?\>[\w-]+\+Sg\+Ill    \+Sg\+Ill    An
+\<N11[A-M]?\>[\w-]+\+Sg\+Ine    \+Sg\+Ine    ssA
+\<N11[A-M]?\>[\w-]+\+Sg\+Ela    \+Sg\+Ela    stA
+\<N11[A-M]?\>[\w-]+\+Sg\+Ade    \+Sg\+Ade    llA
+\<N11[A-M]?\>[\w-]+\+Sg\+Abl    \+Sg\+Abl    ltA
+\<N11[A-M]?\>[\w-]+\+Sg\+All    \+Sg\+All    lle
+\<N11[A-M]?\>[\w-]+\+Sg\+Ess    \+Sg\+Ess    nA
+\<N11[A-M]?\>[\w-]+\+Sg\+Tra    \+Sg\+Tra    ksi
+\<N11[A-M]?\>[\w-]+\+Pl\+Nom    \+Pl\+Nom    t
+\<N11[A-M]?\>[\w-]+\+Pl\+Gen    [aä]\+Pl\+Gen    oiden
+\<N11[A-M]?\>[\w-]+\+Pl\+Par    [aä]\+Pl\+Par    oitA
+\<N11[A-M]?\>[\w-]+\+Pl\+Ill    [aä]\+Pl\+Ill    iin
+\<N11[A-M]?\>[\w-]+\+Pl\+Ine    [aä]\+Pl\+Ine    oissA
+\<N11[A-M]?\>[\w-]+\+Pl\+Ela    [aä]\+Pl\+Ela    oistA
+\<N11[A-M]?\>[\w-]+\+Pl\+Ade    [aä]\+Pl\+Ade    oillA
+\<N11[A-M]?\>[\w-]+\+Pl\+Abl    [aä]\+Pl\+Abl    oiltA
+\<N11[A-M]?\>[\w-]+\+Pl\+All    [aä]\+Pl\+All    oille
+\<N11[A-M]?\>[\w-]+\+Pl\+Ess    [aä]\+Pl\+Ess    oinA
+\<N11[A-M]?\>[\w-]+\+Pl\+Tra    [aä]\+Pl\+Tra    oiksi
