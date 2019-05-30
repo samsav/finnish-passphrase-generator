@@ -80,6 +80,31 @@ INFL_11 = [
     ('<N11>omena+Pl+Tra', '<N11>omenoiksi'),
 ]
 
+INFL_12 = [
+    ('<N12>kulkija+Sg+Nom', '<N12>kulkija_'),
+    ('<N12>kulkija+Sg+Gen', '<N12>kulkijan'),
+    ('<N12>kulkija+Sg+Par', '<N12>kulkijaA'),
+    ('<N12>kulkija+Sg+Ill', '<N12>kulkijaAn'),
+    ('<N12>kulkija+Sg+Ine', '<N12>kulkijassA'),
+    ('<N12>kulkija+Sg+Ela', '<N12>kulkijastA'),
+    ('<N12>kulkija+Sg+Ade', '<N12>kulkijallA'),
+    ('<N12>kulkija+Sg+Abl', '<N12>kulkijaltA'),
+    ('<N12>kulkija+Sg+All', '<N12>kulkijalle'),
+    ('<N12>kulkija+Sg+Ess', '<N12>kulkijanA'),
+    ('<N12>kulkija+Sg+Tra', '<N12>kulkijaksi'),
+    ('<N12>kulkija+Pl+Nom', '<N12>kulkijat'),
+    ('<N12>kulkija+Pl+Gen', '<N12>kulkijoiden'),
+    ('<N12>kulkija+Pl+Par', '<N12>kulkijoitA'),
+    ('<N12>kulkija+Pl+Ill', '<N12>kulkijoihin'),
+    ('<N12>kulkija+Pl+Ine', '<N12>kulkijoissA'),
+    ('<N12>kulkija+Pl+Ela', '<N12>kulkijoistA'),
+    ('<N12>kulkija+Pl+Ade', '<N12>kulkijoillA'),
+    ('<N12>kulkija+Pl+Abl', '<N12>kulkijoiltA'),
+    ('<N12>kulkija+Pl+All', '<N12>kulkijoille'),
+    ('<N12>kulkija+Pl+Ess', '<N12>kulkijoinA'),
+    ('<N12>kulkija+Pl+Tra', '<N12>kulkijoiksi'),
+]
+
 
 @pytest.mark.parametrize("test_input, expected", INFL_01)
 def test_inflection_pattern_01(test_input, expected):
@@ -96,4 +121,10 @@ def test_inflection_pattern_02(test_input, expected):
 @pytest.mark.parametrize("test_input, expected", INFL_11)
 def test_test_inflection_pattern_11(test_input, expected):
     """Test inflection pattern 11"""
+    assert nlp.inflect(test_input) == expected
+
+
+@pytest.mark.parametrize("test_input, expected", INFL_12)
+def test_test_inflection_pattern_12(test_input, expected):
+    """Test inflection pattern 12"""
     assert nlp.inflect(test_input) == expected
