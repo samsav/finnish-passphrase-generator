@@ -215,7 +215,7 @@
 \<N11[A-M]?\>[\w-]+\+Pl\+Nom    \+Pl\+Nom    t
 \<N11[A-M]?\>[\w-]+\+Pl\+Gen    [aä]\+Pl\+Gen    oiden
 \<N11[A-M]?\>[\w-]+\+Pl\+Par    [aä]\+Pl\+Par    oitA
-\<N11[A-M]?\>[\w-]+\+Pl\+Ill    [aä]\+Pl\+Ill    iin
+\<N11[A-M]?\>[\w-]+\+Pl\+Ill    [aä]\+Pl\+Ill    oihin
 \<N11[A-M]?\>[\w-]+\+Pl\+Ine    [aä]\+Pl\+Ine    oissA
 \<N11[A-M]?\>[\w-]+\+Pl\+Ela    [aä]\+Pl\+Ela    oistA
 \<N11[A-M]?\>[\w-]+\+Pl\+Ade    [aä]\+Pl\+Ade    oillA
