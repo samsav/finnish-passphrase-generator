@@ -200,7 +200,6 @@
 
 # Pattern 11
 # omena
-
 \<N11[A-M]?\>[\w-]+\+Sg\+Nom    \+Sg\+Nom    _
 \<N11[A-M]?\>[\w-]+\+Sg\+Gen    \+Sg\+Gen    n
 \<N11[A-M]?\>[\w-]+\+Sg\+Par    \+Sg\+Par    A
@@ -223,3 +222,28 @@
 \<N11[A-M]?\>[\w-]+\+Pl\+All    [aä]\+Pl\+All    oille
 \<N11[A-M]?\>[\w-]+\+Pl\+Ess    [aä]\+Pl\+Ess    oinA
 \<N11[A-M]?\>[\w-]+\+Pl\+Tra    [aä]\+Pl\+Tra    oiksi
+
+# Pattern 12
+# kulkija
+\<N12[A-M]?\>[\w-]+\+Sg\+Nom    \+Sg\+Nom    _
+\<N12[A-M]?\>[\w-]+\+Sg\+Gen    \+Sg\+Gen    n
+\<N12[A-M]?\>[\w-]+\+Sg\+Par    \+Sg\+Par    A
+\<N12[A-M]?\>[\w-]+\+Sg\+Ill    \+Sg\+Ill    An
+\<N12[A-M]?\>[\w-]+\+Sg\+Ine    \+Sg\+Ine    ssA
+\<N12[A-M]?\>[\w-]+\+Sg\+Ela    \+Sg\+Ela    stA
+\<N12[A-M]?\>[\w-]+\+Sg\+Ade    \+Sg\+Ade    llA
+\<N12[A-M]?\>[\w-]+\+Sg\+Abl    \+Sg\+Abl    ltA
+\<N12[A-M]?\>[\w-]+\+Sg\+All    \+Sg\+All    lle
+\<N12[A-M]?\>[\w-]+\+Sg\+Ess    \+Sg\+Ess    nA
+\<N12[A-M]?\>[\w-]+\+Sg\+Tra    \+Sg\+Tra    ksi
+\<N12[A-M]?\>[\w-]+\+Pl\+Nom    \+Pl\+Nom    t
+\<N12[A-M]?\>[\w-]+\+Pl\+Gen    [aä]\+Pl\+Gen    oiden
+\<N12[A-M]?\>[\w-]+\+Pl\+Par    [aä]\+Pl\+Par    oitA
+\<N12[A-M]?\>[\w-]+\+Pl\+Ill    [aä]\+Pl\+Ill    oihin
+\<N12[A-M]?\>[\w-]+\+Pl\+Ine    [aä]\+Pl\+Ine    oissA
+\<N12[A-M]?\>[\w-]+\+Pl\+Ela    [aä]\+Pl\+Ela    oistA
+\<N12[A-M]?\>[\w-]+\+Pl\+Ade    [aä]\+Pl\+Ade    oillA
+\<N12[A-M]?\>[\w-]+\+Pl\+Abl    [aä]\+Pl\+Abl    oiltA
+\<N12[A-M]?\>[\w-]+\+Pl\+All    [aä]\+Pl\+All    oille
+\<N12[A-M]?\>[\w-]+\+Pl\+Ess    [aä]\+Pl\+Ess    oinA
+\<N12[A-M]?\>[\w-]+\+Pl\+Tra    [aä]\+Pl\+Tra    oiksi
