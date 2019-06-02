@@ -130,6 +130,31 @@ INFL_13 = [
     ('<N13>katiska+Pl+Tra', '<N13>katiskoiksi'),
 ]
 
+INFL_14 = [
+    ('<N14>solakka+Sg+Nom', '<N14>solakka_'),
+    ('<N14>solakka+Sg+Gen', '<N14>solakan'),
+    ('<N14>solakka+Sg+Par', '<N14>solakkaA'),
+    ('<N14>solakka+Sg+Ill', '<N14>solakkaAn'),
+    ('<N14>solakka+Sg+Ine', '<N14>solakassA'),
+    ('<N14>solakka+Sg+Ela', '<N14>solakastA'),
+    ('<N14>solakka+Sg+Ade', '<N14>solakallA'),
+    ('<N14>solakka+Sg+Abl', '<N14>solakaltA'),
+    ('<N14>solakka+Sg+All', '<N14>solakalle'),
+    ('<N14>solakka+Sg+Ess', '<N14>solakkanA'),
+    ('<N14>solakka+Sg+Tra', '<N14>solakaksi'),
+    ('<N14>solakka+Pl+Nom', '<N14>solakat'),
+    ('<N14>solakka+Pl+Gen', '<N14>solakoiden'),
+    ('<N14>solakka+Pl+Par', '<N14>solakoitA'),
+    ('<N14>solakka+Pl+Ill', '<N14>solakoihin'),
+    ('<N14>solakka+Pl+Ine', '<N14>solakoissA'),
+    ('<N14>solakka+Pl+Ela', '<N14>solakoistA'),
+    ('<N14>solakka+Pl+Ade', '<N14>solakoillA'),
+    ('<N14>solakka+Pl+Abl', '<N14>solakoiltA'),
+    ('<N14>solakka+Pl+All', '<N14>solakoille'),
+    ('<N14>solakka+Pl+Ess', '<N14>solakoinA'),
+    ('<N14>solakka+Pl+Tra', '<N14>solakoiksi'),
+]
+
 
 @pytest.mark.parametrize("test_input, expected", INFL_01)
 def test_inflection_pattern_01(test_input, expected):
@@ -157,4 +182,9 @@ def test_test_inflection_pattern_12(test_input, expected):
 @pytest.mark.parametrize("test_input, expected", INFL_13)
 def test_test_inflection_pattern_13(test_input, expected):
     """Test inflection pattern 13"""
+    assert nlp.inflect(test_input) == expected
+
+@pytest.mark.parametrize("test_input, expected", INFL_14)
+def test_test_inflection_pattern_14(test_input, expected):
+    """Test inflection pattern 14"""
     assert nlp.inflect(test_input) == expected
