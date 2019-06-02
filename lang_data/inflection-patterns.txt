@@ -90,7 +90,7 @@
 \<N[56][A-M]?\>[\w-]+[^i]\+Pl\+Par		\+Pl\+Par     ejA
 \<N[56][A-M]?\>[\w-]+[^i]\+Pl\+Ill		\+Pl\+Ill     eihin
 \<N[56][A-M]?\>[\w-]+[^i]\+Pl\+Ine		\+Pl\+Ine     eissA
-\<N[56][A-M]?\>[\w-]+[^i]\+Pl\+Ela	  \+Pl\+Ela     eistA
+\<N[56][A-M]?\>[\w-]+[^i]\+Pl\+Ela	    \+Pl\+Ela     eistA
 \<N[56][A-M]?\>[\w-]+[^i]\+Pl\+Ade		\+Pl\+Ade     eillA
 \<N[56][A-M]?\>[\w-]+[^i]\+Pl\+Abl		\+Pl\+Abl     eiltA
 \<N[56][A-M]?\>[\w-]+[^i]\+Pl\+All		\+Pl\+All     eille
@@ -272,3 +272,29 @@
 \<N13[A-M]?\>[\w-]+\+Pl\+All    [aä]\+Pl\+All    oille
 \<N13[A-M]?\>[\w-]+\+Pl\+Ess    [aä]\+Pl\+Ess    oinA
 \<N13[A-M]?\>[\w-]+\+Pl\+Tra    [aä]\+Pl\+Tra    oiksi
+
+# Pattern 14
+# Mostly words ending in -kkA
+# solakka, navetta, ulappa
+\<N14[A-M]?\>[\w-]+\+Sg\+Nom    \+Sg\+Nom    _
+\<N14[A-M]?\>[\w-]+\+Sg\+Gen    ([kpt])([aä])\+Sg\+Gen    \2n
+\<N14[A-M]?\>[\w-]+\+Sg\+Par    \+Sg\+Par    A
+\<N14[A-M]?\>[\w-]+\+Sg\+Ill    \+Sg\+Ill    An
+\<N14[A-M]?\>[\w-]+\+Sg\+Ine    ([kpt])([aä])\+Sg\+Ine    \2ssA
+\<N14[A-M]?\>[\w-]+\+Sg\+Ela    ([kpt])([aä])\+Sg\+Ela    \2stA
+\<N14[A-M]?\>[\w-]+\+Sg\+Ade    ([kpt])([aä])\+Sg\+Ade    \2llA
+\<N14[A-M]?\>[\w-]+\+Sg\+Abl    ([kpt])([aä])\+Sg\+Abl    \2ltA
+\<N14[A-M]?\>[\w-]+\+Sg\+All    ([kpt])([aä])\+Sg\+All    \2lle
+\<N14[A-M]?\>[\w-]+\+Sg\+Ess    \+Sg\+Ess    nA
+\<N14[A-M]?\>[\w-]+\+Sg\+Tra    ([kpt])([aä])\+Sg\+Tra    \2ksi
+\<N14[A-M]?\>[\w-]+\+Pl\+Nom    ([kpt])([aä])\+Pl\+Nom    \2t
+\<N14[A-M]?\>[\w-]+\+Pl\+Gen    [kpt][aä]\+Pl\+Gen    oiden
+\<N14[A-M]?\>[\w-]+\+Pl\+Par    [kpt][aä]\+Pl\+Par    oitA
+\<N14[A-M]?\>[\w-]+\+Pl\+Ill    [kpt][aä]\+Pl\+Ill    oihin
+\<N14[A-M]?\>[\w-]+\+Pl\+Ine    [kpt][aä]\+Pl\+Ine    oissA
+\<N14[A-M]?\>[\w-]+\+Pl\+Ela    [kpt][aä]\+Pl\+Ela    oistA
+\<N14[A-M]?\>[\w-]+\+Pl\+Ade    [kpt][aä]\+Pl\+Ade    oillA
+\<N14[A-M]?\>[\w-]+\+Pl\+Abl    [kpt][aä]\+Pl\+Abl    oiltA
+\<N14[A-M]?\>[\w-]+\+Pl\+All    [kpt][aä]\+Pl\+All    oille
+\<N14[A-M]?\>[\w-]+\+Pl\+Ess    [kpt][aä]\+Pl\+Ess    oinA
+\<N14[A-M]?\>[\w-]+\+Pl\+Tra    [kpt][aä]\+Pl\+Tra    oiksi
