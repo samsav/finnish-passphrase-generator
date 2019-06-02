@@ -105,6 +105,31 @@ INFL_12 = [
     ('<N12>kulkija+Pl+Tra', '<N12>kulkijoiksi'),
 ]
 
+INFL_13 = [
+    ('<N13>katiska+Sg+Nom', '<N13>katiska_'),
+    ('<N13>katiska+Sg+Gen', '<N13>katiskan'),
+    ('<N13>katiska+Sg+Par', '<N13>katiskaA'),
+    ('<N13>katiska+Sg+Ill', '<N13>katiskaAn'),
+    ('<N13>katiska+Sg+Ine', '<N13>katiskassA'),
+    ('<N13>katiska+Sg+Ela', '<N13>katiskastA'),
+    ('<N13>katiska+Sg+Ade', '<N13>katiskallA'),
+    ('<N13>katiska+Sg+Abl', '<N13>katiskaltA'),
+    ('<N13>katiska+Sg+All', '<N13>katiskalle'),
+    ('<N13>katiska+Sg+Ess', '<N13>katiskanA'),
+    ('<N13>katiska+Sg+Tra', '<N13>katiskaksi'),
+    ('<N13>katiska+Pl+Nom', '<N13>katiskat'),
+    ('<N13>katiska+Pl+Gen', '<N13>katiskoiden'),
+    ('<N13>katiska+Pl+Par', '<N13>katiskoitA'),
+    ('<N13>katiska+Pl+Ill', '<N13>katiskoihin'),
+    ('<N13>katiska+Pl+Ine', '<N13>katiskoissA'),
+    ('<N13>katiska+Pl+Ela', '<N13>katiskoistA'),
+    ('<N13>katiska+Pl+Ade', '<N13>katiskoillA'),
+    ('<N13>katiska+Pl+Abl', '<N13>katiskoiltA'),
+    ('<N13>katiska+Pl+All', '<N13>katiskoille'),
+    ('<N13>katiska+Pl+Ess', '<N13>katiskoinA'),
+    ('<N13>katiska+Pl+Tra', '<N13>katiskoiksi'),
+]
+
 
 @pytest.mark.parametrize("test_input, expected", INFL_01)
 def test_inflection_pattern_01(test_input, expected):
@@ -127,4 +152,9 @@ def test_test_inflection_pattern_11(test_input, expected):
 @pytest.mark.parametrize("test_input, expected", INFL_12)
 def test_test_inflection_pattern_12(test_input, expected):
     """Test inflection pattern 12"""
+    assert nlp.inflect(test_input) == expected
+
+@pytest.mark.parametrize("test_input, expected", INFL_13)
+def test_test_inflection_pattern_13(test_input, expected):
+    """Test inflection pattern 13"""
     assert nlp.inflect(test_input) == expected
