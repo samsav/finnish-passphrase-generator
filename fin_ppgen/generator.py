@@ -1,8 +1,10 @@
-from bs4 import BeautifulSoup
-import secrets
-import nlp
-from helpers import random_set
 """A simple passphrase generator for Finnish"""
+
+import os
+import secrets
+from bs4 import BeautifulSoup
+import nlp
+
 
 # TODO:
 # - add support for alternative forms in e.g. plural genitive and partitive
@@ -45,6 +47,12 @@ def select_inflection_paradigms(word_entries, lower_limit, upper_limit):
     return word_entries_with_selected_infls
 
 
+def random_set(word_list, size_of_set):
+    """Randomly select a subset of the input word list."""
+    random_entries = [secrets.choice(word_list) for i in range(size_of_set)]
+    return random_entries
+
+
 def form_passphrase(wordlist, length):
     """A helper function for turning random words in a list
        into a passphrase that is returned as a string."""
@@ -53,15 +61,29 @@ def form_passphrase(wordlist, length):
     return ' '.join([word.replace(' ', '') for word in words])
 
 
+def kaikkikotona(nouns):
+    nouns = nlp.prepend_lexical_info(nouns)
+    nouns[0] = nouns[0] + '+Pl' + '+Nom'
+    nouns[1] = nouns[1] + '+Sg' + '+Ine'
+    nouns = nlp.apply_consonant_gradation(nouns)
+    nouns = nlp.apply_inflection_rules(nouns)
+    nouns = nlp.apply_other_transformations(nouns)
+    nouns = nlp.apply_vowel_harmony(nouns)
+
+    return f'Ei ole kaikki {nouns[0]} {nouns[1]}'
+
+
 def main():
+    """Main passphrase generation function"""
+
     print("Welcome to the Finnish passphrase generator!\n")
 
+    data_path = os.path.abspath('../lang_data/kotus-sanalista_v1.xml')
     # Parse the XML file for the full word list
-    full_word_list = read_kotus_xml(
-        'kotus-sanalista_v1/kotus-sanalista_v1.xml')
+    full_word_list = read_kotus_xml(data_path)
 
-    # Pick nouns from inflection paradigms 1-10
-    nouns = select_inflection_paradigms(full_word_list, 1, 10)
+    # Pick nouns from inflection paradigms 1-12
+    nouns = select_inflection_paradigms(full_word_list, 1, 12)
     print(f"\nPicked a set of {len(nouns)} words")
 
     while True:
@@ -99,7 +121,10 @@ def main():
             phrase = form_passphrase(final_nouns, 4)
             print("{0} characters: {1}\n".format(len(phrase), phrase))
 
-        print()
+        # print()
+
+        # kaikki_nouns = random_set(nouns, 2)
+        # print(kaikkikotona(kaikki_nouns))
 
 
 if __name__ == '__main__':
