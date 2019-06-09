@@ -113,6 +113,7 @@ laatikot
 laatikkojen laatikoiden laatikoitten
 laatikkoja laatikoita
 laatikkoihin laatikoihin
+
 5
 risti
 ristin
@@ -132,6 +133,7 @@ paperit
 paperien papereiden papereitten
 papereja papereita
 papereihin
+
 7
 ovi
 oven
@@ -211,6 +213,7 @@ solakat
 solakoiden solakoitten solakkojen (solakkain)
 solakoita solakkoja
 solakkoihin solakoihin
+
 15
 korkea
 korkean
