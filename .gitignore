@@ -4,5 +4,6 @@ __pycache__
 .pytest_cache
 
 # Project folders
-kotus-sanalista_v1
 misc
+
+*.zip
