@@ -1,6 +1,8 @@
-kotus-sanalista_v1/*
 .vscode
 Pipfile.lock
 __pycache__
 .pytest_cache
-misc/*
+
+# Project folders
+kotus-sanalista_v1
+misc
