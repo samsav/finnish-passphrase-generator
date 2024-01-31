@@ -1,8 +1,6 @@
 """Inflection pattern tests"""
 
 import pytest
-
-# from context import fin_ppgen
 import fin_ppgen.nlp as nlp
 
 INFL_01 = [
