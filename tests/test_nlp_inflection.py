@@ -1,8 +1,6 @@
 """Inflection pattern tests"""
 
 import pytest
-
-# from context import fin_ppgen
 import fin_ppgen.nlp as nlp
 
 INFL_01 = [
@@ -155,6 +153,53 @@ INFL_14 = [
     ('<N14>solakka+Pl+Tra', '<N14>solakoiksi'),
 ]
 
+INFL_15 = [
+    ('<N15>hopea+Sg+Nom', '<N15>hopea_'),
+    ('<N15>hopea+Sg+Gen', '<N15>hopean'),
+    ('<N15>hopea+Sg+Par', '<N15>hopeaA'),
+    ('<N15>hopea+Sg+Ill', '<N15>hopeaAn'),
+    ('<N15>hopea+Sg+Ine', '<N15>hopeassA'),
+    ('<N15>hopea+Sg+Ela', '<N15>hopeastA'),
+    ('<N15>hopea+Sg+Ade', '<N15>hopeallA'),
+    ('<N15>hopea+Sg+Abl', '<N15>hopealtA'),
+    ('<N15>hopea+Sg+All', '<N15>hopealle'),
+    ('<N15>hopea+Sg+Ess', '<N15>hopeanA'),
+    ('<N15>hopea+Sg+Tra', '<N15>hopeaksi'),
+    ('<N15>hopea+Pl+Nom', '<N15>hopeat'),
+    ('<N15>hopea+Pl+Gen', '<N15>hopeiden'),
+    ('<N15>hopea+Pl+Par', '<N15>hopeitA'),
+    ('<N15>hopea+Pl+Ill', '<N15>hopeihin'),
+    ('<N15>hopea+Pl+Ine', '<N15>hopeissA'),
+    ('<N15>hopea+Pl+Ela', '<N15>hopeistA'),
+    ('<N15>hopea+Pl+Ade', '<N15>hopeillA'),
+    ('<N15>hopea+Pl+Abl', '<N15>hopeiltA'),
+    ('<N15>hopea+Pl+All', '<N15>hopeille'),
+    ('<N15>hopea+Pl+Ess', '<N15>hopeinA'),
+    ('<N15>hopea+Pl+Tra', '<N15>hopeiksi'),
+    ('<N15>ilkeä+Sg+Nom', '<N15>ilkeä_'),
+    ('<N15>ilkeä+Sg+Gen', '<N15>ilkeän'),
+    ('<N15>ilkeä+Sg+Par', '<N15>ilkeäA'),
+    ('<N15>ilkeä+Sg+Ill', '<N15>ilkeäAn'),
+    ('<N15>ilkeä+Sg+Ine', '<N15>ilkeässA'),
+    ('<N15>ilkeä+Sg+Ela', '<N15>ilkeästA'),
+    ('<N15>ilkeä+Sg+Ade', '<N15>ilkeällA'),
+    ('<N15>ilkeä+Sg+Abl', '<N15>ilkeältA'),
+    ('<N15>ilkeä+Sg+All', '<N15>ilkeälle'),
+    ('<N15>ilkeä+Sg+Ess', '<N15>ilkeänA'),
+    ('<N15>ilkeä+Sg+Tra', '<N15>ilkeäksi'),
+    ('<N15>ilkeä+Pl+Nom', '<N15>ilkeät'),
+    ('<N15>ilkeä+Pl+Gen', '<N15>ilkeiden'),
+    ('<N15>ilkeä+Pl+Par', '<N15>ilkeitA'),
+    ('<N15>ilkeä+Pl+Ill', '<N15>ilkeihin'),
+    ('<N15>ilkeä+Pl+Ine', '<N15>ilkeissA'),
+    ('<N15>ilkeä+Pl+Ela', '<N15>ilkeistA'),
+    ('<N15>ilkeä+Pl+Ade', '<N15>ilkeillA'),
+    ('<N15>ilkeä+Pl+Abl', '<N15>ilkeiltA'),
+    ('<N15>ilkeä+Pl+All', '<N15>ilkeille'),
+    ('<N15>ilkeä+Pl+Ess', '<N15>ilkeinA'),
+    ('<N15>ilkeä+Pl+Tra', '<N15>ilkeiksi'),
+]
+
 
 @pytest.mark.parametrize("test_input, expected", INFL_01)
 def test_inflection_pattern_01(test_input, expected):
@@ -187,4 +232,9 @@ def test_test_inflection_pattern_13(test_input, expected):
 @pytest.mark.parametrize("test_input, expected", INFL_14)
 def test_test_inflection_pattern_14(test_input, expected):
     """Test inflection pattern 14"""
+    assert nlp.inflect(test_input) == expected
+
+@pytest.mark.parametrize("test_input, expected", INFL_15)
+def test_test_inflection_pattern_15(test_input, expected):
+    """Test inflection pattern 15"""
     assert nlp.inflect(test_input) == expected

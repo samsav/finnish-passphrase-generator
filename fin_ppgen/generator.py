@@ -82,8 +82,8 @@ def main():
     # Parse the XML file for the full word list
     full_word_list = read_kotus_xml(data_path)
 
-    # Pick nouns from inflection paradigms 1-14
-    nouns = select_inflection_paradigms(full_word_list, 1, 14)
+    # Pick nouns from inflection paradigms 1-15
+    nouns = select_inflection_paradigms(full_word_list, 1, 15)
     print(f"\nPicked a set of {len(nouns)} words")
 
     while True:

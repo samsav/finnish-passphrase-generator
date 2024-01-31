@@ -298,3 +298,29 @@
 \<N14[A-M]?\>[\w-]+\+Pl\+All    [kpt][aä]\+Pl\+All    oille
 \<N14[A-M]?\>[\w-]+\+Pl\+Ess    [kpt][aä]\+Pl\+Ess    oinA
 \<N14[A-M]?\>[\w-]+\+Pl\+Tra    [kpt][aä]\+Pl\+Tra    oiksi
+
+# Pattern 15
+# Words ending in -eA
+# hopea, ilkeä
+\<N15[A-M]?\>[\w-]+\+Sg\+Nom    \+Sg\+Nom           _
+\<N15[A-M]?\>[\w-]+\+Sg\+Gen    \+Sg\+Gen           n
+\<N15[A-M]?\>[\w-]+\+Sg\+Par    \+Sg\+Par           A
+\<N15[A-M]?\>[\w-]+\+Sg\+Ill    \+Sg\+Ill           An
+\<N15[A-M]?\>[\w-]+\+Sg\+Ine    \+Sg\+Ine           ssA
+\<N15[A-M]?\>[\w-]+\+Sg\+Ela    \+Sg\+Ela           stA
+\<N15[A-M]?\>[\w-]+\+Sg\+Ade    \+Sg\+Ade           llA
+\<N15[A-M]?\>[\w-]+\+Sg\+Abl    \+Sg\+Abl           ltA
+\<N15[A-M]?\>[\w-]+\+Sg\+All    \+Sg\+All           lle
+\<N15[A-M]?\>[\w-]+\+Sg\+Ess    \+Sg\+Ess           nA
+\<N15[A-M]?\>[\w-]+\+Sg\+Tra    \+Sg\+Tra           ksi
+\<N15[A-M]?\>[\w-]+\+Pl\+Nom    \+Pl\+Nom           t
+\<N15[A-M]?\>[\w-]+\+Pl\+Gen    [aä]\+Pl\+Gen       iden
+\<N15[A-M]?\>[\w-]+\+Pl\+Par    [aä]\+Pl\+Par       itA
+\<N15[A-M]?\>[\w-]+\+Pl\+Ill    [aä]\+Pl\+Ill       ihin
+\<N15[A-M]?\>[\w-]+\+Pl\+Ine    [aä]\+Pl\+Ine       issA
+\<N15[A-M]?\>[\w-]+\+Pl\+Ela    [aä]\+Pl\+Ela       istA
+\<N15[A-M]?\>[\w-]+\+Pl\+Ade    [aä]\+Pl\+Ade       illA
+\<N15[A-M]?\>[\w-]+\+Pl\+Abl    [aä]\+Pl\+Abl       iltA
+\<N15[A-M]?\>[\w-]+\+Pl\+All    [aä]\+Pl\+All       ille
+\<N15[A-M]?\>[\w-]+\+Pl\+Ess    [aä]\+Pl\+Ess       inA
+\<N15[A-M]?\>[\w-]+\+Pl\+Tra    [aä]\+Pl\+Tra       iksi
