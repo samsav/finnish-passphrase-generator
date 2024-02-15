@@ -28,46 +28,80 @@ def read_csv_to_dict(csv_file_path: Path) -> dict[str, dict[str, list[str]]]:
     Returns:
         dict[str, dict[str, list[str]]]: A dictionary where keys are words
         and values are dictionaries containing word data about its word class and
-        inflection paradigms. The values may be strings or lists of strings.
+        inflection paradigms. The values are lists of strings.
     """
-    word_dict: dict[str, dict[str, str | list[str]]] = {}
-    with open(csv_file_path, 'r', newline='', encoding='utf-8') as file:
-        csv_reader = csv.DictReader(file, delimiter='\t')
+    word_dict: dict[str, dict[str, list[str]]] = {}
+    with open(csv_file_path, "r", newline="", encoding="utf-8") as file:
+        csv_reader = csv.DictReader(file, delimiter="\t")
         for row in csv_reader:
             # The word itself is in the 'Hakusana' column.
-            word: str = row['Hakusana']
+            word: str = row["Hakusana"]
             # The word class is in the 'Sanaluokka' column.
-            # Some words can belong to more than one word class.
-            word_class_list: list[str] = [wc.strip() for wc in row['Sanaluokka'].split(',')]
+            # Some words can belong to more than one word class. Some words are missing word class data.
+            word_class_list: list[str] = [
+                wc.strip() if wc else None for wc in row["Sanaluokka"].split(",")
+            ]
             # Some words have alternative inflection paradigms separated by a comma.
             # Remove parentheses that denote optionality for a paradigm and strip any whitespace.
             # Words that do not have inflection data associated with them have an empty string in the 'Taivutustiedot' column.
-            inflection_paradigm_list: list[str] = [re.sub(r'[\(\)]', '', p.strip() if p else 'no_inflection_data') for p in row['Taivutustiedot'].split(',')]
-            
+            inflection_paradigm_list: list[str] = [
+                re.sub(r"[\(\)]", "", p.strip()) if p else None
+                for p in row["Taivutustiedot"].split(",")
+            ]
+
+            # The inflection paradigms in the data consist of a number optionally followed by an asterisk and an uppercase letter.
+            # For example: 38, 4*A. Filter out rare exceptions to this pattern.
+            if inflection_paradigm_list[0]:
+                inflection_paradigm_list = [
+                    inflection
+                    for inflection in inflection_paradigm_list
+                    if re.match(r"^\d", inflection)
+                ]
+
             word_dict[word] = {
-                'word_class': word_class_list,
-                'inflection_paradigm': inflection_paradigm_list,
+                "word_class": word_class_list,
+                "inflection": inflection_paradigm_list,
             }
     return word_dict
 
 
 # TODO: use *args to pass an arbitrary set of inflection numbers
 #       to the function?
-# Note that some entries do not have a <t> field in the word list:
-# these appear to be compound nouns. Currently these entries are excluded.
-def select_inflection_paradigms(word_entries, lower_limit, upper_limit):
-    """Select word entries that have specified inflection paradigms
-    in the Kotus word list. Return the word entries as a list."""
+def filter_dict_by_inflection(
+    word_dict: dict[str, dict[str, list[str]]],
+    lower_limit: int = 1,
+    upper_limit: int = 15,
+    get_noninflecting: bool = False,
+):
+    """
+    Filters a dictionary of word data based on the inflection paradigm.
 
-    word_entries_with_selected_infls = []
-    for entry in word_entries:
-        if (
-            entry.t is not None
-            and int(entry.t.tn.string) >= lower_limit
-            and int(entry.t.tn.string) <= upper_limit
-        ):
-            word_entries_with_selected_infls.append(entry)
-    return word_entries_with_selected_infls
+    Args:
+        word_dict (dict): A dictionary containing word data where keys are words
+            and values are dictionaries containing word class and inflection paradigms.
+            The 'inflection' value is expected to be a list of strings representing inflection paradigms.
+        lower_limit (int): The lower limit of the inflection paradigm range to filter.
+        upper_limit (int): The upper limit of the inflection paradigm range to filter.
+
+    Returns:
+        dict: A filtered dictionary where keys are words and values are dictionaries containing word class
+        and inflection paradigms, filtered based on the inflection paradigms within the specified range.
+    """
+    filtered_dict: dict[str, dict[str, list[str]]] = dict()
+    for word, data in word_dict.items():
+        if get_noninflecting:
+            if data["inflection"][0] in ("99", None):
+                filtered_dict[word] = data
+
+        else:
+            for inflection in data["inflection"]:
+                if (
+                    inflection
+                    and lower_limit <= int(inflection.split("*")[0]) <= upper_limit
+                ):
+                    filtered_dict[word] = data
+
+    return filtered_dict
 
 
 def random_set(word_list, size_of_set):
@@ -107,9 +141,9 @@ def main():
     # Read the CSV word list file into a dict
     word_dict = read_csv_to_dict(csv_file_path)
 
-    # Pick nouns from inflection paradigms 1-15
-    nouns = select_inflection_paradigms(full_word_list, 1, 15)
-    print(f"\nPicked a set of {len(nouns)} words")
+    # Pick words from inflection paradigms 1-15
+    filtered_inflections_dict = filter_dict_by_inflection(word_dict, 1, 15)
+    filtered_noninflecting_dict = filter_dict_by_inflection(word_dict, get_noninflecting=True)
 
     while True:
         # Simple control loop that only enforces exit condition
