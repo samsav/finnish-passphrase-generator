@@ -12,10 +12,6 @@ import nlp
 # - add support for alternative forms in e.g. plural genitive and partitive
 # - add support for forming compounds
 # - add option for only using base forms of words
-# - reduce startup time by saving the parsed XML into a file? is that possible?
-# - refactor code
-# - write actual tests
-# - move all print statements to main function
 
 
 def read_csv_to_dict(csv_file_path: Path) -> dict[str, dict[str, list[str]]]:
@@ -65,31 +61,35 @@ def read_csv_to_dict(csv_file_path: Path) -> dict[str, dict[str, list[str]]]:
     return word_dict
 
 
-# TODO: use *args to pass an arbitrary set of inflection numbers
-#       to the function?
 def filter_dict_by_inflection(
     word_dict: dict[str, dict[str, list[str]]],
     lower_limit: int = 1,
     upper_limit: int = 15,
-    get_noninflecting: bool = False,
+    get_only_noninflecting: bool = False,
 ):
     """
-    Filters a dictionary of word data based on the inflection paradigm.
+    Filters a dictionary of word data based on the inflection paradigm within a specified range.
 
     Args:
-        word_dict (dict): A dictionary containing word data where keys are words
+        word_dict (dict[str, dict[str, list[str]]]): A dictionary containing word data where keys are words
             and values are dictionaries containing word class and inflection paradigms.
             The 'inflection' value is expected to be a list of strings representing inflection paradigms.
-        lower_limit (int): The lower limit of the inflection paradigm range to filter.
-        upper_limit (int): The upper limit of the inflection paradigm range to filter.
+        lower_limit (int, optional): The lower limit of the inflection paradigm range to filter.
+            Defaults to 1.
+        upper_limit (int, optional): The upper limit of the inflection paradigm range to filter.
+            Defaults to 15.
+        get_only_noninflecting (bool, optional): If True, only return words with non-inflecting paradigms
+            marked as '99' or None. Defaults to False.
 
     Returns:
-        dict: A filtered dictionary where keys are words and values are dictionaries containing word class
-        and inflection paradigms, filtered based on the inflection paradigms within the specified range.
+        dict[str, dict[str, list[str]]]: A filtered dictionary where keys are words and values are dictionaries
+        containing word class and inflection paradigms, filtered based on the inflection paradigms within the
+        specified range and the condition of including non-inflecting paradigms if specified.
     """
+
     filtered_dict: dict[str, dict[str, list[str]]] = dict()
     for word, data in word_dict.items():
-        if get_noninflecting:
+        if get_only_noninflecting:
             if data["inflection"][0] in ("99", None):
                 filtered_dict[word] = data
 
@@ -102,6 +102,38 @@ def filter_dict_by_inflection(
                     filtered_dict[word] = data
 
     return filtered_dict
+
+
+# TODO: filter dict by word class
+def filter_dict_by_word_class(
+    word_dict: dict[str, dict[str, list[str]]],
+    word_classes: list[str],
+    include_all: bool = False,
+):
+    return None
+
+
+def filter_prefix_words(
+    word_dict: dict[str, dict[str, list[str]]]
+) -> dict[str, dict[str, list[str]]]:
+    """
+    Filters words in a dictionary based on whether they end with a hyphen ('-').
+
+    Args:
+        word_dict (dict[str, dict[str, list[str]]]): A dictionary where keys are words
+            and values are dictionaries containing word data on word class and
+            inflection paradigms stored as lists of strings.
+
+    Returns:
+        dict[str, dict[str, list[str]]]: A filtered dictionary where keys are words
+            ending with a hyphen ('-') and values are dictionaries containing word data
+            on word class and inflection paradigms.
+    """
+    return {word: data for word, data in word_dict.items() if word.endswith("-")}
+
+
+def filter_suffix_words(word_dict: dict[str, dict[str, list[str]]]):
+    return {word: data for word, data in word_dict.items() if word.startswith("-")}
 
 
 def random_set(word_list, size_of_set):
@@ -118,18 +150,6 @@ def form_passphrase(wordlist, length):
     return " ".join([word.replace(" ", "") for word in words])
 
 
-def kaikkikotona(nouns):
-    nouns = nlp.prepend_lexical_info(nouns)
-    nouns[0] = nouns[0] + "+Pl" + "+Nom"
-    nouns[1] = nouns[1] + "+Sg" + "+Ine"
-    nouns = nlp.apply_consonant_gradation(nouns)
-    nouns = nlp.apply_inflection_rules(nouns)
-    nouns = nlp.apply_other_transformations(nouns)
-    nouns = nlp.apply_vowel_harmony(nouns)
-
-    return f"Ei ole kaikki {nouns[0]} {nouns[1]}"
-
-
 def main():
     """Main passphrase generation function"""
 
@@ -143,7 +163,13 @@ def main():
 
     # Pick words from inflection paradigms 1-15
     filtered_inflections_dict = filter_dict_by_inflection(word_dict, 1, 15)
-    filtered_noninflecting_dict = filter_dict_by_inflection(word_dict, get_noninflecting=True)
+    # Get noninflecting words into a separate dictionary
+    noninflecting_words_dict = filter_dict_by_inflection(
+        word_dict, get_only_noninflecting=True
+    )
+    # Get words that can be used as prefixes or suffixes into separate dictionaries
+    prefix_words_dict = filter_prefix_words(word_dict)
+    suffix_words_dict = filter_suffix_words(word_dict)
 
     while True:
         # Simple control loop that only enforces exit condition
