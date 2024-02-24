@@ -27,9 +27,9 @@ LANG_DATA_PATH = FILE_PATH.parent / 'lang_data'
 
 # Regex match and replace rules
 GRADATION_RULES = initialize_rules(
-    LANG_DATA_PATH / 'lang_data/gradation-patterns.txt')
+    LANG_DATA_PATH / 'gradation-patterns.txt')
 INFLECTION_RULES = initialize_rules(
-    LANG_DATA_PATH / 'lang_data/inflection-patterns.txt')
+    LANG_DATA_PATH / 'inflection-patterns.txt')
 
 
 def prepend_lexical_info(word: str, data: dict[str, list[str]]) -> str:
@@ -99,6 +99,23 @@ def convert_to_lexical_plural(word: str) -> str:
     return re.sub(r't\+Sg', r'+Pl', word)
 
 
+def remove_lexical_prefix(word: str) -> str:
+    """
+    Removes lexical prefixes from a word.
+
+    Lexical prefixes are represented as a sequence of an uppercase letter, one or more digits, and optionally
+    another uppercase letter from 'A' to 'M' enclosed in elbow brackets. For example, <S5B>.
+    This function removes any occurrences of such patterns from the word.
+
+    Args:
+        word (str): The word from which lexical prefixes need to be removed.
+
+    Returns:
+        str: The word with lexical prefixes removed.
+    """
+    return re.sub(r'\<N\d+[A-M]?\>', '', word)
+
+
 def apply_consonant_gradation(wordlist):
     """Apply consonant gradation rules to a list of words and return
        the results in a list."""
@@ -120,8 +137,7 @@ def apply_inflection_rules(wordlist):
     for word in wordlist:
         inflected = inflect(word)
         # TODO: move cleanup to a separate function
-        cleaned = re.sub(r'\<N\d+[A-M]?\>', '', inflected)
-        cleaned = re.sub('_', ' ', cleaned)
+        cleaned = re.sub('_', ' ', inflected)
         inflected_words.append(cleaned)
     return inflected_words
 
