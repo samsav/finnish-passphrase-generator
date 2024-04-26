@@ -25,6 +25,8 @@ def read_csv_to_dict(csv_file_path: Path) -> dict[str, dict[str, list[str]]]:
         dict[str, dict[str, list[str]]]: A dictionary where keys are words
         and values are dictionaries containing word data about its word class and
         inflection paradigms. The values are lists of strings.
+
+        Example item in the dictionary: {'mussukka', {'word_class': ['S'], 'inflection': ['14*A']}}
     """
     word_dict: dict[str, dict[str, list[str]]] = {}
     with open(csv_file_path, "r", newline="", encoding="utf-8") as file:
@@ -85,6 +87,8 @@ def filter_dict_by_inflection(
         dict[str, dict[str, list[str]]]: A filtered dictionary where keys are words and values are dictionaries
         containing word class and inflection paradigms, filtered based on the inflection paradigms within the
         specified range and the condition of including non-inflecting paradigms if specified.
+
+        The structure of the filtered dictionary is the same as in the input dictionary.
     """
 
     filtered_dict: dict[str, dict[str, list[str]]] = dict()
@@ -133,6 +137,19 @@ def filter_prefix_words(
 
 
 def filter_suffix_words(word_dict: dict[str, dict[str, list[str]]]):
+    """
+    Filters words in a dictionary based on whether they start with a hyphen ('-').
+
+    Args:
+        word_dict (dict[str, dict[str, list[str]]]): A dictionary where keys are words
+            and values are dictionaries containing word data on word class and
+            inflection paradigms stored as lists of strings.
+
+    Returns:
+        dict[str, dict[str, list[str]]]: A filtered dictionary where keys are words
+            starting with a hyphen ('-') and values are dictionaries containing word data
+            on word class and inflection paradigms.
+    """
     return {word: data for word, data in word_dict.items() if word.startswith("-")}
 
 
