@@ -23,7 +23,9 @@ CLITICS: list[str] = ['kO', 'pA', 'kAAn', 'hAn', 'kin']
 
 # Paths for the current file and the language data folder
 FILE_PATH = Path(__file__).resolve()
-LANG_DATA_PATH = FILE_PATH.parent / 'lang_data'
+print(FILE_PATH)
+LANG_DATA_PATH = FILE_PATH.parent / '..' / 'lang_data'
+print(LANG_DATA_PATH)
 
 # Regex match and replace rules
 GRADATION_RULES = initialize_rules(
@@ -40,8 +42,7 @@ def prepend_lexical_info(word: str, data: dict[str, list[str]]) -> str:
         gradation: str = ''
         if '*' in inflection:
             inflection, gradation = inflection.split('*')
-    
-    return '<' + inflection + gradation + '>' + word
+        return '<' + inflection + gradation + '>' + word
 
 
 def randomize_clitics(p1: int = 10, p2: int = 10) -> str:
@@ -93,9 +94,13 @@ def inflect(word: str) -> str:
 
 
 def convert_to_lexical_plural(word: str) -> str:
-    """Helper function for ensuring that words only appearing in the
-       plural form (such as 'aivot' or 'häät') are lexically represented
-       as plural."""
+    """
+    Ensures that words that only appear in the plural form (such as 'aivot' or 'häät')
+    are lexically represented as plural.
+    
+    The regex substitution removes the plural marker -t, which is
+    added back later in the processing. For example, 'aivot+Sg' becomes 'aivo+Pl'.
+    """
     return re.sub(r't\+Sg', r'+Pl', word)
 
 

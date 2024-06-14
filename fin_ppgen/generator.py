@@ -199,16 +199,18 @@ def main():
         # nouns created earlier. Then determine their inflection and gradation
         # paradigms using the compose_nouns() function and apply gradation,
         # inflection, and vowel harmony rules in sequence.
-        random_nouns = random_set(nouns, 50)
-        preprocessed_nouns = nlp.prepend_lexical_info(random_nouns)
-        lexical_nouns = nlp.generate_lexical_forms(preprocessed_nouns)
-        gradated_nouns = nlp.apply_consonant_gradation(lexical_nouns)
+        random_nouns = random_set(list(filtered_inflections_dict.items()), 50)
+        preprocessed_nouns = list()
+        for entry in random_nouns:
+            word, data = entry
+            preprocessed_nouns.append(nlp.prepend_lexical_info(word, data))
+        gradated_nouns = nlp.apply_consonant_gradation(preprocessed_nouns)
         inflected_nouns = nlp.apply_inflection_rules(gradated_nouns)
         almost_done = nlp.apply_other_transformations(inflected_nouns)
         final_nouns = nlp.apply_vowel_harmony(almost_done)
 
         processing_chain = [
-            [lexical_nouns[i], gradated_nouns[i], inflected_nouns[i], final_nouns[i]]
+            [preprocessed_nouns[i], gradated_nouns[i], inflected_nouns[i], final_nouns[i]]
             for i in range(50)
         ]
 
