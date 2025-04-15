@@ -2,11 +2,6 @@ name: Build
 
 on:
   workflow_dispatch:
-    inputs:
-      commit_sha:
-        description: Enter the Git commit to checkout
-        default: main
-        type: string
 
 permissions:
   contents: read
@@ -20,6 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.commit_sha }}
+          ref: main
           fetch-depth: 0
           fetch-tags: true
