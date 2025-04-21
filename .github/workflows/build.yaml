@@ -1,4 +1,4 @@
-name: Build
+name: Build and deploy to S3
 
 on:
   workflow_dispatch:
@@ -23,3 +23,22 @@ jobs:
           ref: ${{ inputs.commit_sha }}
           fetch-depth: 0
           fetch-tags: true
+      - name: Create archive
+        run: |
+          echo "Creating archive..."
+          mkdir tmp
+          tar --exclude="./tmp" -czf ./tmp/fippgen.tar.gz ./*
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      - name: Upload archive to S3
+        run: |
+          aws s3 cp ./tmp/fippgen.tar.gz s3://finnish-passphrase-generator/
+      - name: Cleanup
+        run: |
+          echo "Cleaning up..."
+          rm ./tmp/fippgen.tar.gz
+          rmdir ./tmp
