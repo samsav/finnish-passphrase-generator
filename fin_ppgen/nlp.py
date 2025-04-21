@@ -3,46 +3,54 @@ This module contains NLP functions for processing strings read from the
 Kotus word list into lexical representations and into final word forms.
 """
 
-from pathlib import Path
-from helpers import initialize_rules
-
 import re
 import secrets
+from pathlib import Path
 
+from helpers import initialize_rules
 
 # Sets for noun endings
 # Grammatical number: singular or plural
-GRAM_NUMBER: list[str] = ['+Sg', '+Pl']
+GRAM_NUMBER: list[str] = ["+Sg", "+Pl"]
 # The accusative, comitative, and instructive case are not included since their use is more restricted.
 INFLECTIONS: list[str] = [
-    '+Nom', '+Gen', '+Par', '+Ine', '+Ela', '+Ill', '+Ade', '+Abl', '+All',
-    '+Ess', '+Tra'
+    "+Nom",
+    "+Gen",
+    "+Par",
+    "+Ine",
+    "+Ela",
+    "+Ill",
+    "+Ade",
+    "+Abl",
+    "+All",
+    "+Ess",
+    "+Tra",
 ]
 # Clitic particles. See clitics in VISK: https://scripta.kotus.fi/visk/sisallys.php?p=126
-CLITICS: list[str] = ['kO', 'pA', 'kAAn', 'hAn', 'kin']
+CLITICS: list[str] = ["kO", "pA", "kAAn", "hAn", "kin"]
 
 # Paths for the current file and the language data folder
 FILE_PATH = Path(__file__).resolve()
 print(FILE_PATH)
-LANG_DATA_PATH = FILE_PATH.parent / '..' / 'lang_data'
+LANG_DATA_PATH = FILE_PATH.parent / ".." / "lang_data"
 print(LANG_DATA_PATH)
 
 # Regex match and replace rules
-GRADATION_RULES = initialize_rules(
-    LANG_DATA_PATH / 'gradation-patterns.txt')
-INFLECTION_RULES = initialize_rules(
-    LANG_DATA_PATH / 'inflection-patterns.txt')
+GRADATION_RULES = initialize_rules(LANG_DATA_PATH / "gradation-patterns.txt")
+INFLECTION_RULES = initialize_rules(LANG_DATA_PATH / "inflection-patterns.txt")
 
 
 def prepend_lexical_info(word: str, data: dict[str, list[str]]) -> str:
     # replace spaces with underscores to simplify later regexes
-    word: str = word.replace(' ', '_')
-    if data['inflection'][0] is not None:
-        inflection: str = secrets.choice(data['inflection'])  # Some words have alternative inflection paradigms
-        gradation: str = ''
-        if '*' in inflection:
-            inflection, gradation = inflection.split('*')
-        return '<' + inflection + gradation + '>' + word
+    word: str = word.replace(" ", "_")
+    if data["inflection"][0] is not None:
+        inflection: str = secrets.choice(
+            data["inflection"]
+        )  # Some words have alternative inflection paradigms
+        gradation: str = ""
+        if "*" in inflection:
+            inflection, gradation = inflection.split("*")
+        return "<" + inflection + gradation + ">" + word
 
 
 def randomize_clitics(p1: int = 10, p2: int = 10) -> str:
@@ -52,11 +60,11 @@ def randomize_clitics(p1: int = 10, p2: int = 10) -> str:
         if secrets.randbelow(100) < p2:
             # TODO: finish working out clitic combinations
             match clitics:
-                case ['hAn']:
-                    clitics.append(secrets.choice(['kin', 'pAs']))
-                case ['kin']:
-                    clitics.append('kO')
-    return ''.join(c for c in clitics)
+                case ["hAn"]:
+                    clitics.append(secrets.choice(["kin", "pAs"]))
+                case ["kin"]:
+                    clitics.append("kO")
+    return "".join(c for c in clitics)
 
 
 def attach_noun_endings(word: str) -> str:
@@ -68,13 +76,13 @@ def attach_noun_endings(word: str) -> str:
 
 
 def attach_verb_endings(word: str) -> str:
-    return ''
+    return ""
 
 
 def gradate(word: str) -> str:
     """Check if a word matches any gradation patterns: if yes, return the word
-       with gradation replace rules applied. If not, return the original word
-       in order to avoid returning None values."""
+    with gradation replace rules applied. If not, return the original word
+    in order to avoid returning None values."""
     for match_rule, gradation_rule in GRADATION_RULES:
         if match_rule(word):
             return gradation_rule(word)
@@ -84,8 +92,8 @@ def gradate(word: str) -> str:
 
 def inflect(word: str) -> str:
     """Check if a word matches any inflection patterns: if yes, return the word
-       with inflection replace rules applied. If not, return the original word
-       in order to avoid returning None values."""
+    with inflection replace rules applied. If not, return the original word
+    in order to avoid returning None values."""
     for match_rule, inflect_rule in INFLECTION_RULES:
         if match_rule(word):
             return inflect_rule(word)
@@ -97,11 +105,11 @@ def convert_to_lexical_plural(word: str) -> str:
     """
     Ensures that words that only appear in the plural form (such as 'aivot' or 'häät')
     are lexically represented as plural.
-    
+
     The regex substitution removes the plural marker -t, which is
     added back later in the processing. For example, 'aivot+Sg' becomes 'aivo+Pl'.
     """
-    return re.sub(r't\+Sg', r'+Pl', word)
+    return re.sub(r"t\+Sg", r"+Pl", word)
 
 
 def remove_lexical_prefix(word: str) -> str:
@@ -118,17 +126,17 @@ def remove_lexical_prefix(word: str) -> str:
     Returns:
         str: The word with lexical prefixes removed.
     """
-    return re.sub(r'\<N\d+[A-M]?\>', '', word)
+    return re.sub(r"\<N\d+[A-M]?\>", "", word)
 
 
 def apply_consonant_gradation(wordlist):
     """Apply consonant gradation rules to a list of words and return
-       the results in a list."""
+    the results in a list."""
     # TODO: after removing checking for plurals, rewrite as list comprehension
     gradated_words = []
     for word in wordlist:
         # TODO: move checking for plurals to a separate function
-        if re.search(r't\+Sg', word) and '_' not in word:
+        if re.search(r"t\+Sg", word) and "_" not in word:
             word = convert_to_lexical_plural(word)
         word = gradate(word)
         gradated_words.append(word)
@@ -137,27 +145,25 @@ def apply_consonant_gradation(wordlist):
 
 def apply_inflection_rules(wordlist):
     """Apply inflection rules to a list of words and return
-       the results in a list."""
+    the results in a list."""
     inflected_words = []
     for word in wordlist:
         inflected = inflect(word)
         # TODO: move cleanup to a separate function
-        cleaned = re.sub('_', ' ', inflected)
+        cleaned = re.sub("_", " ", inflected)
         inflected_words.append(cleaned)
     return inflected_words
 
 
 def apply_vowel_harmony(wordlist):
     """Apply vowel harmony transformations to a list of words
-       and return the results in a list."""
+    and return the results in a list."""
     words_with_vowel_harmony = []
     for word in wordlist:
         if back_vowel_determines_harmony(word):
-            words_with_vowel_harmony.append(
-                word.translate(str.maketrans("AO", "ao")))
+            words_with_vowel_harmony.append(word.translate(str.maketrans("AO", "ao")))
         else:
-            words_with_vowel_harmony.append(
-                word.translate(str.maketrans("AO", "äö")))
+            words_with_vowel_harmony.append(word.translate(str.maketrans("AO", "äö")))
     return words_with_vowel_harmony
 
 
@@ -170,22 +176,22 @@ def apply_vowel_harmony(wordlist):
 # which also produce mostly the correct forms of non-compounded non-loan words.
 def back_vowel_determines_harmony(word: str) -> bool:
     """A simplistic algorithm for determining the vowel harmony
-       of a word."""
+    of a word."""
     for c in word[::-1]:
-        if c in 'äö':
+        if c in "äö":
             return False
-        if c in 'aou':
+        if c in "aou":
             return True
 
 
 def replace_i_with_j(word: str) -> str:
-    return re.sub(r'(\w)aia', r'\1aja', word)
+    return re.sub(r"(\w)aia", r"\1aja", word)
 
 
 def apply_other_transformations(wordlist):
     words = []
     for word in wordlist:
-        if re.search(r'[^t]aia', word):
+        if re.search(r"[^t]aia", word):
             word = replace_i_with_j(word)
         words.append(word)
 
