@@ -1,12 +1,12 @@
 """A simple passphrase generator for Finnish"""
 
-from pathlib import Path
-import os
-import secrets
 import csv
+import os
 import re
-import nlp
+import secrets
+from pathlib import Path
 
+import nlp
 
 # TODO:
 # - add support for alternative forms in e.g. plural genitive and partitive
@@ -36,13 +36,13 @@ def read_csv_to_dict(csv_file_path: Path) -> dict[str, dict[str, list[str]]]:
             word: str = row["Hakusana"]
             # The word class is in the 'Sanaluokka' column.
             # Some words can belong to more than one word class. Some words are missing word class data.
-            word_class_list: list[str] = [
+            word_class_list: list[str | None] = [
                 wc.strip() if wc else None for wc in row["Sanaluokka"].split(",")
             ]
             # Some words have alternative inflection paradigms separated by a comma.
             # Remove parentheses that denote optionality for a paradigm and strip any whitespace.
             # Words that do not have inflection data associated with them have an empty string in the 'Taivutustiedot' column.
-            inflection_paradigm_list: list[str] = [
+            inflection_paradigm_list: list[str | None] = [
                 re.sub(r"[\(\)]", "", p.strip()) if p else None
                 for p in row["Taivutustiedot"].split(",")
             ]
@@ -118,7 +118,7 @@ def filter_dict_by_word_class(
 
 
 def filter_prefix_words(
-    word_dict: dict[str, dict[str, list[str]]]
+    word_dict: dict[str, dict[str, list[str]]],
 ) -> dict[str, dict[str, list[str]]]:
     """
     Filters words in a dictionary based on whether they end with a hyphen ('-').
@@ -210,7 +210,12 @@ def main():
         final_nouns = nlp.apply_vowel_harmony(almost_done)
 
         processing_chain = [
-            [preprocessed_nouns[i], gradated_nouns[i], inflected_nouns[i], final_nouns[i]]
+            [
+                preprocessed_nouns[i],
+                gradated_nouns[i],
+                inflected_nouns[i],
+                final_nouns[i],
+            ]
             for i in range(50)
         ]
 
