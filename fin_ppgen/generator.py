@@ -28,8 +28,8 @@ def read_csv_to_dict(csv_file_path: Path) -> dict[str, dict[str, list[str]]]:
 
         Example item in the dictionary: {'mussukka', {'word_class': ['S'], 'inflection': ['14*A']}}
     """
-    word_dict: dict[str, dict[str, list[str]]] = {}
-    with open(csv_file_path, "r", newline="", encoding="utf-8") as file:
+    word_dict: dict[str, dict[str, list[str]]] = dict()
+    with open(csv_file_path, "r", encoding="utf-8") as file:
         csv_reader = csv.DictReader(file, delimiter="\t")
         for row in csv_reader:
             # The word itself is in the 'Hakusana' column.
@@ -47,7 +47,8 @@ def read_csv_to_dict(csv_file_path: Path) -> dict[str, dict[str, list[str]]]:
                 for p in row["Taivutustiedot"].split(",")
             ]
 
-            # The inflection paradigms in the data consist of a number optionally followed by an asterisk and an uppercase letter.
+            # The inflection paradigms in the data consist of a number,
+            # optionally followed by an asterisk and an uppercase letter.
             # For example: 38, 4*A. Filter out rare exceptions to this pattern.
             if inflection_paradigm_list[0]:
                 inflection_paradigm_list = [
@@ -63,7 +64,7 @@ def read_csv_to_dict(csv_file_path: Path) -> dict[str, dict[str, list[str]]]:
     return word_dict
 
 
-def filter_dict_by_inflection(
+def filter_word_dict_by_inflection(
     word_dict: dict[str, dict[str, list[str]]],
     lower_limit: int = 1,
     upper_limit: int = 15,
@@ -75,7 +76,6 @@ def filter_dict_by_inflection(
     Args:
         word_dict (dict[str, dict[str, list[str]]]): A dictionary containing word data where keys are words
             and values are dictionaries containing word class and inflection paradigms.
-            The 'inflection' value is expected to be a list of strings representing inflection paradigms.
         lower_limit (int, optional): The lower limit of the inflection paradigm range to filter.
             Defaults to 1.
         upper_limit (int, optional): The upper limit of the inflection paradigm range to filter.
@@ -153,18 +153,12 @@ def filter_suffix_words(word_dict: dict[str, dict[str, list[str]]]):
     return {word: data for word, data in word_dict.items() if word.startswith("-")}
 
 
-def random_set(word_list, size_of_set):
-    """Randomly select a subset of the input word list."""
-    random_entries = [secrets.choice(word_list) for i in range(size_of_set)]
-    return random_entries
-
-
-def form_passphrase(wordlist, length):
+def form_passphrase(wordlist, phrase_length):
     """A helper function for turning random words in a list
     into a passphrase that is returned as a string."""
-    words = random_set(wordlist, length)
+    random_words = [secrets.choice(wordlist) for _ in range(phrase_length)]
     # clear possible internal spaces from words
-    return " ".join([word.replace(" ", "") for word in words])
+    return " ".join([word.replace(" ", "") for word in random_words])
 
 
 def main():
@@ -179,9 +173,9 @@ def main():
     word_dict = read_csv_to_dict(csv_file_path)
 
     # Pick words from inflection paradigms 1-15
-    filtered_inflections_dict = filter_dict_by_inflection(word_dict, 1, 15)
+    filtered_inflections_dict = filter_word_dict_by_inflection(word_dict, 1, 15)
     # Get noninflecting words into a separate dictionary
-    noninflecting_words_dict = filter_dict_by_inflection(
+    noninflecting_words_dict = filter_word_dict_by_inflection(
         word_dict, get_only_noninflecting=True
     )
     # Get words that can be used as prefixes or suffixes into separate dictionaries
@@ -199,16 +193,22 @@ def main():
         # nouns created earlier. Then determine their inflection and gradation
         # paradigms using the compose_nouns() function and apply gradation,
         # inflection, and vowel harmony rules in sequence.
-        random_nouns = random_set(list(filtered_inflections_dict.items()), 50)
+        filtered_inflections_as_list = list(filtered_inflections_dict.items())
+        random_word_list = [
+            secrets.choice(filtered_inflections_as_list) for _ in range(50)
+        ]
         preprocessed_nouns = list()
-        for entry in random_nouns:
+        for entry in random_word_list:
             word, data = entry
             preprocessed_nouns.append(nlp.prepend_lexical_info(word, data))
+
         gradated_nouns = nlp.apply_consonant_gradation(preprocessed_nouns)
         inflected_nouns = nlp.apply_inflection_rules(gradated_nouns)
         almost_done = nlp.apply_other_transformations(inflected_nouns)
         final_nouns = nlp.apply_vowel_harmony(almost_done)
 
+        # This is included for debugging purposes: get the transformed versions
+        # of the word at each processing stage
         processing_chain = [
             [
                 preprocessed_nouns[i],
@@ -229,7 +229,7 @@ def main():
             print("{:30}\t{:30}\t{:20}\t{:20}\t".format(*word))
 
         print("\nHere are some possible phrases:\n")
-        for i in range(0, 4):
+        for _ in range(0, 4):
             phrase = form_passphrase(final_nouns, 4)
             print("{0} characters: {1}\n".format(len(phrase), phrase))
 
