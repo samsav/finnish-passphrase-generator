@@ -40,24 +40,26 @@ GRADATION_RULES = initialize_rules(LANG_DATA_PATH / "gradation-patterns.txt")
 INFLECTION_RULES = initialize_rules(LANG_DATA_PATH / "inflection-patterns.txt")
 
 
-def prepend_lexical_info(word: str, data: dict[str, list[str]]) -> str:
+def prepend_lexical_info(word: str, word_data: dict[str, list[str]]) -> str:
     # replace spaces with underscores to simplify later regexes
-    word: str = word.replace(" ", "_")
-    if data["inflection"][0] is not None:
-        inflection: str = secrets.choice(
-            data["inflection"]
-        )  # Some words have alternative inflection paradigms
+    word_with_space_handling: str = word.replace(" ", "_")
+    # TODO: move this error handling to the function that calls this function?
+    if any(word_data["inflection"]):
+        # Some words have multiple inflection paradigms so let's pick one at random
+        inflection: str = secrets.choice(word_data["inflection"])
         gradation: str = ""
         if "*" in inflection:
             inflection, gradation = inflection.split("*")
-        return "<" + inflection + gradation + ">" + word
+        return "<" + inflection + gradation + ">" + word_with_space_handling
+    else:
+        return word_with_space_handling
 
 
-def randomize_clitics(p1: int = 10, p2: int = 10) -> str:
-    clitics = []
-    if secrets.randbelow(100) < p1:
+def randomize_clitics(probability_1: int = 10, probability_2: int = 10) -> str:
+    clitics = list()
+    if secrets.randbelow(100) < probability_1:
         clitics.append(secrets.choice(CLITICS))
-        if secrets.randbelow(100) < p2:
+        if secrets.randbelow(100) < probability_2:
             # TODO: finish working out clitic combinations
             match clitics:
                 case ["hAn"]:
@@ -67,15 +69,15 @@ def randomize_clitics(p1: int = 10, p2: int = 10) -> str:
     return "".join(c for c in clitics)
 
 
-def attach_noun_endings(word: str) -> str:
+def attach_noun_endings(noun: str) -> str:
     """Attach random grammatical number, inflection, and clitic endings to a noun."""
     grammatical_number: str = secrets.choice(GRAM_NUMBER)
     inflection: str = secrets.choice(INFLECTIONS)
     clitics: str = randomize_clitics()
-    return word + grammatical_number + inflection + clitics
+    return noun + grammatical_number + inflection + clitics
 
 
-def attach_verb_endings(word: str) -> str:
+def attach_verb_endings(verb: str) -> str:
     return ""
 
 
@@ -183,6 +185,8 @@ def back_vowel_determines_harmony(word: str) -> bool:
         if c in "aou":
             return True
 
+    return False
+
 
 def replace_i_with_j(word: str) -> str:
     return re.sub(r"(\w)aia", r"\1aja", word)
@@ -198,13 +202,13 @@ def apply_other_transformations(wordlist):
     return words
 
 
-def kaikkikotona(nouns):
-    nouns = prepend_lexical_info(nouns)
-    nouns[0] = nouns[0] + "+Pl" + "+Nom"
-    nouns[1] = nouns[1] + "+Sg" + "+Ine"
-    nouns = apply_consonant_gradation(nouns)
-    nouns = apply_inflection_rules(nouns)
-    nouns = apply_other_transformations(nouns)
-    nouns = apply_vowel_harmony(nouns)
-
-    return f"Ei ole kaikki {nouns[0]} {nouns[1]}"
+# def kaikkikotona(nouns):
+#     nouns = prepend_lexical_info(nouns)
+#     nouns[0] = nouns[0] + "+Pl" + "+Nom"
+#     nouns[1] = nouns[1] + "+Sg" + "+Ine"
+#     nouns = apply_consonant_gradation(nouns)
+#     nouns = apply_inflection_rules(nouns)
+#     nouns = apply_other_transformations(nouns)
+#     nouns = apply_vowel_harmony(nouns)
+#
+#     return f"Ei ole kaikki {nouns[0]} {nouns[1]}"
